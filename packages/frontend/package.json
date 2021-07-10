@@ -8,6 +8,8 @@
     "lint": "eslint . --ext .ts,.tsx --fix"
   },
   "dependencies": {
+    "@usedapp/core": "^0.3.24",
+    "ethers": "^5.3.1",
     "next": "latest",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
