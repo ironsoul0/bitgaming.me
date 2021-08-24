@@ -16,6 +16,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "yarn workspace @ethereum-starter/frontend dev",
+    "deploy": "yarn workspace @ethereum-starter/hardhat deploy",
+    "chain": "yarn workspace @ethereum-starter/hardhat chain",
     "lint": "yarn workspaces run lint"
   },
   "devDependencies": {

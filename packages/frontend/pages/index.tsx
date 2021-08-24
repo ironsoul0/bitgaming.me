@@ -1,8 +1,8 @@
-import { useEtherBalance, useEthers } from "@usedapp/core";
-import { CONTRACT_ADDRESS } from "artifacts/contracts/contractAddress";
+import { useEtherBalance, useEthers, useSendTransaction } from "@usedapp/core";
+import { YourContract as CONTRACT_ADDRESS } from "artifacts/contracts";
 import YourContract from "artifacts/contracts/YourContract.sol/YourContract.json";
-import { Contract, providers } from "ethers";
-import React, { useMemo } from "react";
+import { Contract, providers, utils } from "ethers";
+import React, { useEffect, useMemo } from "react";
 import { YourContract as YourContractType } from "types/typechain";
 
 const localProvider = new providers.StaticJsonRpcProvider(
@@ -17,9 +17,10 @@ const useYourContract = () => {
       new Contract(
         CONTRACT_ADDRESS,
         YourContract.abi,
-        library?.getSigner()
+        localProvider.getSigner()
+        // library?.getSigner()
       ) as YourContractType,
-    [library]
+    []
   );
 
   return contract;
@@ -30,16 +31,21 @@ const IndexPage = () => {
     useEthers();
 
   const balance = useEtherBalance(account);
-
-  console.log(balance);
-
   const contract = useYourContract();
+  const { sendTransaction } = useSendTransaction({
+    signer: localProvider.getSigner(),
+  });
+
+  // useEffect(() => {
+  //   if (account)
+  //     sendTransaction({ to: account, value: utils.parseEther("0.1") });
+  // }, [account, sendTransaction]);
 
   return (
     <div className="max-w-lg py-4 mx-auto text-center">
       <p>Connected account: {account}</p>
       <p>Chain ID: {chainId}</p>
-      <p>Balance: {balance}</p>
+      <p>Balance: {balance?.toString()}</p>
       <button onClick={() => activateBrowserWallet()} className="bg-green-500">
         Connect to a wallet
       </button>
