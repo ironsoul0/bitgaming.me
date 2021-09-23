@@ -4,6 +4,7 @@ module.exports = {
   parserOptions: {
     ecmaFeatures: { jsx: true },
   },
+  ignorePatterns: ["**/artifacts/**/*.ts"],
   env: {
     browser: true,
     node: true,
