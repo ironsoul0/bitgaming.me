@@ -1,2 +1,9 @@
 # dependencies
 node_modules/
+
+# logs
+logs
+*.log
+yarn-error.log*
+
+.DS_Store
