@@ -23,7 +23,6 @@ const config: Config = {
   multicallAddresses: {
     ...MULTICALL_ADDRESSES,
     [ChainId.Hardhat]: MulticallContract,
-    [ChainId.Localhost]: MulticallContract,
   },
 };
 
