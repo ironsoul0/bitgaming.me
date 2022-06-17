@@ -1,0 +1,47 @@
+.round-main {
+  text-align: center;
+  width: 100%;
+}
+
+.round-p-lg {
+  color: white;
+  font-size: 36px;
+}
+
+.round-p {
+  color: white;
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.round-p-sm {
+  color: white;
+  margin-top: 16px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.round-level-p {
+  color: white;
+  font-size: 40px;
+  font-weight: 500;
+  margin-top: 36px;
+  margin-bottom: 36px;
+}
+
+.game-icon {
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+
+.round-progress {
+  margin-top: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 128px;
+}
+
+.round-number {
+  font-size: 42px;
+  font-weight: 500;
+}

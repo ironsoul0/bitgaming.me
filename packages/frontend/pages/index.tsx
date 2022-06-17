@@ -38,35 +38,40 @@ const IndexPage = () => {
   }, [contract, account]);
 
   return (
-    <div className="max-w-lg py-4 mx-auto text-center">
-      {!account ? (
-        <button
-          className="px-4 py-3 mt-4 text-white bg-blue-500 rounded-sm"
-          onClick={() => activateBrowserWallet()}
-        >
-          Please connect account
-        </button>
-      ) : (
-        <div>
-          <p>
-            <span className="font-bold text-red-500">Connected account:</span>{" "}
-            {account.substr(0, 7).concat("...")}
-          </p>
-          <p>
-            <span className="font-bold text-red-500">Chain ID:</span> {chainId}
-          </p>
-          <p>
-            <span className="font-bold text-red-500">Greeting:</span> {greeting}
-          </p>
-          <button
-            className="px-4 py-3 mt-3 text-white bg-blue-500 rounded-sm"
-            onClick={() => deactivate()}
-          >
-            Disconnect wallet
-          </button>
+      <>
+        <div className="max-w-lg py-4 mx-auto text-center">
+          {!account ? (
+              <button
+                  className="px-4 py-3 mt-4 text-white bg-blue-500 rounded-sm"
+                  onClick={() => activateBrowserWallet()}
+              >
+                Please connect account
+              </button>
+          ) : (
+              <div>
+                <p>
+                  <span className="font-bold text-red-500">Connected account:</span>{" "}
+                  {account.substr(0, 7).concat("...")}
+                </p>
+                <p>
+                  <span className="font-bold text-red-500">Chain ID:</span> {chainId}
+                </p>
+                <p>
+                  <span className="font-bold text-red-500">Greeting:</span> {greeting}
+                </p>
+                <button
+                    className="px-4 py-3 mt-3 text-white bg-blue-500 rounded-sm"
+                    onClick={() => deactivate()}
+                >
+                  Disconnect wallet
+                </button>
+              </div>
+          )}
         </div>
-      )}
-    </div>
+
+
+      </>
+
   );
 };
 
