@@ -1,13 +1,9 @@
 import { useEthers } from "@usedapp/core";
-import { YourContract as CONTRACT_ADDRESS } from "artifacts/contracts";
-import YourContract from "artifacts/contracts/YourContract.sol/YourContract.json";
-import { Contract, providers } from "ethers";
+import { chainReadProvider } from "config";
+import { MyContract } from "config/contracts";
+import { Contract } from "ethers";
 import React, { useEffect, useMemo, useState } from "react";
 import { YourContract as YourContractType } from "types/typechain";
-
-const localProvider = new providers.StaticJsonRpcProvider(
-  "http://localhost:8545"
-);
 
 const useYourContract = () => {
   const { account, library } = useEthers();
@@ -16,9 +12,9 @@ const useYourContract = () => {
   const contract = useMemo(
     () =>
       new Contract(
-        CONTRACT_ADDRESS,
-        YourContract.abi,
-        account ? library?.getSigner() : localProvider
+        MyContract.address,
+        MyContract.abi,
+        account ? library?.getSigner() : chainReadProvider
       ),
     [account, library]
   ) as YourContractType;

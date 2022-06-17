@@ -19,9 +19,9 @@ export const blockExplorers: ChainIDUrl = {
   [ChainId.Hardhat]: `https://localhost:8545`,
 };
 
-export const TARGET_CHAIN = parseInt(
+export const TARGET_CHAIN = (parseInt(
   process.env.NEXT_PUBLIC_TARGET_CHAIN_ID as string
-) as ValidChainID;
+) || ChainId.Hardhat) as ValidChainID;
 
 export const isValidChain = (chainId: ChainId) => {
   return chainId == TARGET_CHAIN;

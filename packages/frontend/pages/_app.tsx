@@ -6,8 +6,8 @@ import {
   DAppProvider,
   MULTICALL_ADDRESSES,
 } from "@usedapp/core";
-import { MulticallContract } from "artifacts/contracts";
 import { readOnlyUrls } from "config";
+import { Multicall } from "config/contracts";
 import type { AppProps } from "next/app";
 
 const config: Config = {
@@ -22,7 +22,7 @@ const config: Config = {
   ],
   multicallAddresses: {
     ...MULTICALL_ADDRESSES,
-    [ChainId.Hardhat]: MulticallContract,
+    [ChainId.Hardhat]: Multicall[ChainId.Hardhat],
   },
 };
 
