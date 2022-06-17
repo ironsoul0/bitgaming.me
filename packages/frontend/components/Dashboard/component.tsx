@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 //
 // // import { useMe, useGames } from '../../hooks';
 // import { GameCard, Spinner } from '../../components';
@@ -46,9 +46,5 @@ export const DashboardPage: React.FC = () => {
   //   </div>
   // );
 
-    return (
-        <div>
-            This is dashboard page
-        </div>
-    )
+  return <div>This is dashboard page</div>;
 };

@@ -1,25 +1,26 @@
 import { useEthers } from "@usedapp/core";
 import { MyContract } from "config/contracts";
 import { Contract } from "ethers";
-import {useMemo} from "react";
-import {chainReadProvider} from "../config";
-import {YourContract as YourContractType} from "../types/typechain";
+import { useMemo } from "react";
+
+import { chainReadProvider } from "../config";
+import { YourContract as YourContractType } from "../types/typechain";
 
 export const useYourContract = () => {
-    const { account, library } = useEthers();
-    console.log("account", account, library);
+  const { account, library } = useEthers();
+  console.log("account", account, library);
 
-    const contract = useMemo(
-        () =>
-            new Contract(
-                MyContract.address,
-                MyContract.abi,
-                account ? library?.getSigner() : chainReadProvider
-            ),
-        [account, library]
-    ) as YourContractType;
+  const contract = useMemo(
+    () =>
+      new Contract(
+        MyContract.address,
+        MyContract.abi,
+        account ? library?.getSigner() : chainReadProvider
+      ),
+    [account, library]
+  ) as YourContractType;
 
-    return contract;
+  return contract;
 };
 
 // import { useAtom, atom } from 'jotai';
@@ -28,7 +29,6 @@ export const useYourContract = () => {
 // import { createUser, CreateUserResponse, GetMeResponse } from '../core';
 
 // const meAtom = atom<CreateUserResponse | null>(null);
-
 
 // export const useMe = () => {
 //     const { account, library } = useEthers();

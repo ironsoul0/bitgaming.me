@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import { useRouter } from 'next/router';
 import { useEthers } from "@usedapp/core";
+import clsx from "clsx";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 
-import { GameTemplate } from '../GameTemplate';
-import { ChimpIcon } from '../../core';
+import { ChimpIcon } from "../../core";
+import { GameTemplate } from "../GameTemplate";
 // import { ChimpIcon, GameType, updateScore } from '../../core';
 
 const icon = <ChimpIcon />;
@@ -32,7 +32,10 @@ export const ChimpGame = () => {
       .slice(0, cellsVisible);
     const cellValues = new Array(cellsVisible).fill(0).map((_, i) => i + 1);
 
-    const puzzle = cellIndices.reduce((acc, x, index) => ({ ...acc, [x]: cellValues[index] }), {});
+    const puzzle = cellIndices.reduce(
+      (acc, x, index) => ({ ...acc, [x]: cellValues[index] }),
+      {}
+    );
 
     return puzzle;
   };
@@ -51,7 +54,7 @@ export const ChimpGame = () => {
       if (gameState.strikes + 1 === MAX_STRIKES) {
         // if (me) updateScore(me.id, GameType.chimpTest, gameState.numbers);
         // TODO: update score of the given account
-        console.log('use ethers account', account);
+        console.log("use ethers account", account);
       }
 
       setGameState((gameState) => ({
@@ -94,7 +97,7 @@ export const ChimpGame = () => {
   };
 
   const returnToHomePage = () => {
-    router.push('/');
+    router.push("/");
   };
 
   return (
@@ -107,7 +110,7 @@ export const ChimpGame = () => {
       className="px-4"
     >
       {gameState.mode === MODES.Question && (
-        <div className="grid grid-cols-5 grid-rows-5 w-full gap-2">
+        <div className="w-full grid grid-cols-5 grid-rows-5 gap-2">
           {new Array(CELLS).fill(0).map((_, i) => {
             const value = gameState.puzzle[i];
             const valueIsShown = value && value >= target;
@@ -116,9 +119,9 @@ export const ChimpGame = () => {
               <div
                 key={i}
                 className={clsx([
-                  'flex justify-center items-center h-14 w-auto font-bold border-4 rounded border-gray-300 border-opacity-50 text-white text-xl',
-                  !valueIsShown && 'opacity-0',
-                  target > 1 && 'bg-white',
+                  "flex justify-center items-center h-14 w-auto font-bold border-4 rounded border-gray-300 border-opacity-50 text-white text-xl",
+                  !valueIsShown && "opacity-0",
+                  target > 1 && "bg-white",
                 ])}
                 onClick={valueIsShown ? () => handleClick(value) : undefined}
               >
@@ -129,7 +132,7 @@ export const ChimpGame = () => {
         </div>
       )}
       {gameState.mode === MODES.Result && (
-        <div className="text-center text-white font-bold">
+        <div className="font-bold text-center text-white">
           {gameState.strikes === MAX_STRIKES ? (
             <div>
               <h3 className="text-4xl">Чисел</h3>
@@ -137,14 +140,14 @@ export const ChimpGame = () => {
               <div className="mx-auto">
                 <button
                   onClick={restartGame}
-                  className="focus:outline-none bg-yellow-300 text-black font-bold px-4 py-3 rounded mt-4 ml-3"
+                  className="px-4 py-3 mt-4 ml-3 font-bold text-black bg-yellow-300 rounded focus:outline-none"
                 >
                   Попробовать снова
                 </button>
               </div>
               <button
                 onClick={returnToHomePage}
-                className="focus:outline-none bg-gray-200 text-black font-bold px-4 py-3 rounded mt-4 ml-3"
+                className="px-4 py-3 mt-4 ml-3 font-bold text-black bg-gray-200 rounded focus:outline-none"
               >
                 Вернуться в меню
               </button>
@@ -153,13 +156,13 @@ export const ChimpGame = () => {
             <div>
               <h3 className="text-4xl">Чисел</h3>
               <p className="text-5xl">{gameState.numbers}</p>
-              <h4 className="font-semibold text-3xl mt-4">Штраф</h4>
+              <h4 className="mt-4 text-3xl font-semibold">Штраф</h4>
               <h4 className="text-3xl">
                 {gameState.strikes} из {MAX_STRIKES}
               </h4>
               <button
                 onClick={continueGame}
-                className="focus:outline-none bg-yellow-300 text-black font-bold px-4 py-3 rounded mt-4"
+                className="px-4 py-3 mt-4 font-bold text-black bg-yellow-300 rounded focus:outline-none"
               >
                 Продолжить
               </button>

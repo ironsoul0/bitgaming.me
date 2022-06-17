@@ -1,5 +1,5 @@
 import "styles/index.scss";
-import 'styles/NumberMemory.css';
+import "styles/NumberMemory.css";
 
 import {
   ChainId,

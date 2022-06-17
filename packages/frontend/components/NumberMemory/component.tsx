@@ -1,34 +1,39 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+// import { GameType, NumberMemoryIcon, updateScore } from '../../core';
+import clsx from "clsx";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 
 // import { useMe } from '../../hooks';
-import { GameTemplate } from '../../components';
-import { NumberMemoryIcon } from '../../core';
-// import { GameType, NumberMemoryIcon, updateScore } from '../../core';
-import clsx from 'clsx';
+import { GameTemplate } from "../../components";
+import { NumberMemoryIcon } from "../../core";
 
 const icon = <NumberMemoryIcon />;
 
-const ProgressBar = ({ progressPercentage } : {progressPercentage: number | string}) => {
-    return (
-        <div className='h-1 w-full bg-gray-300'>
-            <div
-                style={{ width: `${progressPercentage}%`}}
-                className={`h-full ${
-                    progressPercentage < 70 ? 'bg-red-600' : 'bg-green-600'}`}>
-            </div>
-        </div>
-    );
+const ProgressBar = ({
+  progressPercentage,
+}: {
+  progressPercentage: number | string;
+}) => {
+  return (
+    <div className="w-full h-1 bg-gray-300">
+      <div
+        style={{ width: `${progressPercentage}%` }}
+        className={`h-full ${
+          progressPercentage < 70 ? "bg-red-600" : "bg-green-600"
+        }`}
+      ></div>
+    </div>
+  );
 };
 
 export const NumberMemory: React.FC = () => {
-    const router = useRouter();
+  const router = useRouter();
   // const me = useMe();
   const [activeGame, setActiveGame] = useState(false);
   const [level, setLevel] = useState(3);
-  const [guess, setGuess] = useState('');
+  const [guess, setGuess] = useState("");
   const [counter, setCounter] = React.useState(0);
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState("");
 
   const getRandomInt = (min: number, max: number) => {
     min = Math.ceil(min);
@@ -37,14 +42,16 @@ export const NumberMemory: React.FC = () => {
   };
 
   const [gameActive, setGameActive] = useState(1);
-  const [answer, setAnswer] = useState(getRandomInt(Math.pow(10, 2), Math.pow(10, 3)));
+  const [answer, setAnswer] = useState(
+    getRandomInt(Math.pow(10, 2), Math.pow(10, 3))
+  );
 
   const restartGame = () => {
     setCounter(0);
     setLevel(3);
-    setGuess('');
+    setGuess("");
     setAnswer(getRandomInt(Math.pow(10, 2), Math.pow(10, 3)));
-    setInputValue('');
+    setInputValue("");
     setGameActive(1);
   };
 
@@ -56,7 +63,7 @@ export const NumberMemory: React.FC = () => {
   };
 
   const sendUserInput = () => {
-    setInputValue('');
+    setInputValue("");
     if (guess !== answer.toString()) {
       setGameActive(4);
       // if (me) updateScore(me.id, GameType.numberMemory, level);
@@ -66,7 +73,10 @@ export const NumberMemory: React.FC = () => {
   };
 
   const callNextLevel = () => {
-    const randNumber = getRandomInt(Math.pow(10, level), Math.pow(10, level + 1));
+    const randNumber = getRandomInt(
+      Math.pow(10, level),
+      Math.pow(10, level + 1)
+    );
     setLevel(level + 1);
     setAnswer(randNumber);
     setGameActive(1);
@@ -74,7 +84,7 @@ export const NumberMemory: React.FC = () => {
   };
 
   const returnToHomePage = () => {
-      router.push('/');
+    router.push("/");
   };
 
   React.useEffect(() => {
@@ -93,17 +103,17 @@ export const NumberMemory: React.FC = () => {
         <div>
           <p
             className={clsx([
-              level <= 5 && 'text-8xl',
-              level === 6 && 'text-7xl',
-              level === 7 && 'text-6xl',
-              level === 8 && 'text-5xl',
-              level > 8 && 'text-4xl',
-              'mb-7',
+              level <= 5 && "text-8xl",
+              level === 6 && "text-7xl",
+              level === 7 && "text-6xl",
+              level === 8 && "text-5xl",
+              level > 8 && "text-4xl",
+              "mb-7",
             ])}
-            style={{ color: 'white' }}
+            style={{ color: "white" }}
           >
-            {' '}
-            {answer}{' '}
+            {" "}
+            {answer}{" "}
           </p>
         </div>
         <div className="round-progress">
@@ -114,9 +124,9 @@ export const NumberMemory: React.FC = () => {
   } else if (gameActive === 2) {
     res = (
       <>
-        <p className="round-p mb-3">Какое было число?</p>
+        <p className="mb-3 round-p">Какое было число?</p>
         <input
-          className="block w-full focus:outline-none text-center bg-blue-700 border-2 border-blue-400 rounded px-4 py-4 text-white font-bold text-3xl"
+          className="block w-full px-4 py-4 text-3xl font-bold text-center text-white bg-blue-700 border-2 border-blue-400 rounded focus:outline-none"
           type="text"
           value={inputValue}
           onChange={handleInputChange}
@@ -124,7 +134,7 @@ export const NumberMemory: React.FC = () => {
 
         <button
           onClick={sendUserInput}
-          className="focus:outline-none bg-yellow-300 text-black font-bold px-8 py-3 rounded mt-4 block mx-auto"
+          className="block px-8 py-3 mx-auto mt-4 font-bold text-black bg-yellow-300 rounded focus:outline-none"
         >
           Отправить
         </button>
@@ -140,7 +150,7 @@ export const NumberMemory: React.FC = () => {
         <p className="animate-pulse round-level-p">Уровень {level}</p>
         <button
           onClick={callNextLevel}
-          className="focus:outline-none bg-yellow-300 text-black font-bold px-8 py-3 rounded mt-4 block mx-auto"
+          className="block px-8 py-3 mx-auto mt-4 font-bold text-black bg-yellow-300 rounded focus:outline-none"
         >
           Следующий
         </button>
@@ -154,7 +164,11 @@ export const NumberMemory: React.FC = () => {
         <p className="round-p"> Ваш ответ </p>
         <p
           className="round-p-lg "
-          style={{ textDecorationLine: 'line-through', textDecorationStyle: 'solid', color: 'black' }}
+          style={{
+            textDecorationLine: "line-through",
+            textDecorationStyle: "solid",
+            color: "black",
+          }}
         >
           {guess}
         </p>
@@ -162,14 +176,14 @@ export const NumberMemory: React.FC = () => {
         <div className="mx-auto">
           <button
             onClick={restartGame}
-            className="focus:outline-none bg-yellow-300 text-black font-bold px-4 py-3 rounded mt-4 ml-3"
+            className="px-4 py-3 mt-4 ml-3 font-bold text-black bg-yellow-300 rounded focus:outline-none"
           >
             Попробовать снова
           </button>
         </div>
         <button
           onClick={returnToHomePage}
-          className="focus:outline-none bg-gray-200 text-black font-bold px-4 py-3 rounded mt-4 ml-3"
+          className="px-4 py-3 mt-4 ml-3 font-bold text-black bg-gray-200 rounded focus:outline-none"
         >
           Вернуться в меню
         </button>
