@@ -12,7 +12,6 @@ const default_avatar =
 
 const useYourContract = () => {
   const { account, library } = useEthers();
-  console.log("account", account, library);
 
   const contract = useMemo(
     () =>
@@ -35,8 +34,12 @@ const IndexPage = () => {
 
   useEffect(() => {
     const fetchGreeting = async () => {
-      const greeting = await contract.greeting();
-      setGreeting(greeting);
+      try {
+        const greeting = await contract.greeting();
+        setGreeting(greeting);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     fetchGreeting();
@@ -44,6 +47,13 @@ const IndexPage = () => {
 
   return (
     <VerticalNavigationTemplate>
+      <div
+        style={{
+          width: "100%",
+          background: "linear-gradient(to right, #2193b0, #6dd5ed);",
+        }}
+        className="h-full bg-gradient-to-r from-cyan-500 to-blue-500"
+      ></div>
       <div className="py-4 mx-auto ml-10">
         {!account ? (
           <button
