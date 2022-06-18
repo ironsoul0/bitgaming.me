@@ -92,12 +92,13 @@ const LeaderboardPage = () => {
   return (
     <>
       <VerticalNavigationTemplate>
-        <div className="mt-4 ml-10">
+        <div className="mt-8 ml-4">
           {leaderboard && (
             <div>
-              <div className="mx-2 animate-smooth-appear">
-                <p className="mb-10 text-4xl font-bold text-white">
-                  Game points leaderboard
+              <div className="mx-2">
+                <p className="text-4xl font-bold text-white">Leaderboard</p>
+                <p className="mb-10 text-xl text-white opacity-80">
+                  All participants sorted by on-chain BIT tokens
                 </p>
               </div>
               <div className="animate-smooth-appear">

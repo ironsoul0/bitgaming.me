@@ -1,4 +1,5 @@
 import { useContractFunction, useEtherBalance, useEthers } from "@usedapp/core";
+import clsx from "clsx";
 import { chainReadProvider } from "config";
 import { useCoinsContext } from "config/context";
 import { BITContract } from "config/contracts";
@@ -97,7 +98,7 @@ const IndexPage = () => {
 
   return (
     <VerticalNavigationTemplate>
-      <div className="py-4 mx-auto mt-4 ml-10">
+      <div className="py-4 mx-auto mt-4 ml-4">
         <div>
           <div className="flex items-center mb-5">
             <div
@@ -107,7 +108,9 @@ const IndexPage = () => {
                 backgroundSize: "cover",
               }}
             />
-            <p className="ml-4 text-2xl text-white font-500">Rewards</p>
+            <p className="ml-4 text-2xl font-bold text-white font-500">
+              Rewards
+            </p>
           </div>
           <div className="flex">
             <div className="px-4 py-3 bg-gray-750 rounded-2xl">
@@ -141,8 +144,12 @@ const IndexPage = () => {
                   </div>
                 </div>
                 <button
-                  className="px-3 py-2 mt-2 ml-5 font-bold text-white rounded focus:outline-none bg-purple-950 ring-purple-920 transition-all hover:ring-2"
+                  className={clsx(
+                    "px-3 py-2 mt-2 ml-5 font-bold text-white rounded focus:outline-none bg-purple-950 ring-purple-920 transition-all hover:ring-2",
+                    coins === 0 && "cursor-not-allowed ring-0"
+                  )}
                   onClick={claimCoins}
+                  disabled={coins === 0}
                 >
                   <SyncIcon className="w-6 h-6 text-white" />
                 </button>
