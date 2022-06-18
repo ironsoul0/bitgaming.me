@@ -92,7 +92,7 @@ const LeaderboardPage = () => {
   return (
     <>
       <VerticalNavigationTemplate>
-        <div className="mt-5 ml-5">
+        <div className="mt-4 ml-10">
           {leaderboard && (
             <div>
               <div className="mx-2 animate-smooth-appear">

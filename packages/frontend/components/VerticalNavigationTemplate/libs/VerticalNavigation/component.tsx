@@ -1,6 +1,76 @@
+import { useEthers } from "@usedapp/core";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+
+const AccountBlock: React.FC = () => {
+  const { deactivate, activateBrowserWallet, account } = useEthers();
+
+  return (
+    <div className="flex items-center justify-start w-full py-4 mt-auto bg-indigo-700 mt-36 space-x-2 px-3.5">
+      {!account ? (
+        <button
+          className="px-4 py-3 text-white bg-blue-500 rounded-sm"
+          onClick={() => activateBrowserWallet()}
+        >
+          Please connect account
+        </button>
+      ) : (
+        <>
+          <div className="mr-2">
+            <img src="https://i.ibb.co/fxrbS6p/Ellipse-2-2.png" alt="avatar" />
+          </div>
+          <div className="flex flex-col items-start justify-start mr-16 space-y-2">
+            <p className="text-base text-white cursor-pointer leading-4">
+              {account?.substr(0, 10).concat("...")}
+            </p>
+            <p className="text-sm text-gray-400 cursor-pointer leading-3">
+              {account?.substr(0, 10).concat("...")}
+            </p>
+          </div>
+
+          <div className="ml-10">
+            <button
+              aria-label="visit"
+              className="ml-8 bg-indigo-600 rounded-full focus:ring-2 focus:outline-none hover:bg-indigo-800 p-2.5"
+              onClick={() => deactivate()}
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.16666 10H15.8333"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M10.8333 15L15.8333 10"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M10.8333 5L15.8333 10"
+                  stroke="white"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 export const VerticalNavigation: React.FC = () => {
   const router = useRouter();
@@ -113,9 +183,6 @@ export const VerticalNavigation: React.FC = () => {
             </button>
           </Link>
         </div>
-        {/* <div className="w-full pl-4">
-          <hr className="w-full border-gray-100 dark:border-gray-700" />
-        </div> */}
         <p className="pb-0 pl-4 font-bold text-white">Games</p>
         <div className="flex flex-col items-start justify-start w-full px-4 pb-5 mt-4 text-white space-y-3">
           <button
@@ -313,53 +380,7 @@ export const VerticalNavigation: React.FC = () => {
             <p className="text-base leading-4">Game 3</p>
           </button>
         </div>
-        <div className="flex items-center justify-start w-full py-4 mt-auto bg-indigo-700 mt-36 space-x-2 px-3.5">
-          <div>
-            <img src="https://i.ibb.co/fxrbS6p/Ellipse-2-2.png" alt="avatar" />
-          </div>
-          <div className="flex flex-col items-start justify-start space-y-2">
-            <p className="text-base text-white cursor-pointer leading-4">
-              Alexis Enache
-            </p>
-            <p className="text-xs text-gray-200 cursor-pointer leading-3">
-              alexis _enache@gmail.com
-            </p>
-          </div>
-          <button
-            aria-label="visit"
-            className="bg-indigo-600 rounded-full focus:ring-2 focus:outline-none hover:bg-indigo-800 p-2.5"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M4.16666 10H15.8333"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M10.8333 15L15.8333 10"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M10.8333 5L15.8333 10"
-                stroke="white"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-        </div>
+        <AccountBlock />
       </div>
     </>
   );
