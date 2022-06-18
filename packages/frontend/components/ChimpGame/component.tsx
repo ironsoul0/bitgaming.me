@@ -148,7 +148,8 @@ export const ChimpGame = () => {
             <b>Difficulty: </b>7
           </p>
           <p>
-            <b>Coins per level: </b>5 BIT
+            <b>Coins per level: </b>
+            {REWARD} BIT
           </p>
         </div>
       </div>

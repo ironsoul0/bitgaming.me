@@ -9,9 +9,9 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "./BITToken.sol";
 
 contract BrainNFT is ERC721URIStorage {
-  uint256 public constant BRONZE_THRESHOLD = 10 ether;
-  uint256 public constant SILVER_THRESHOLD = 20 ether;
-  uint256 public constant GOLD_THRESHOLD = 300 ether;
+  uint256 public constant BRONZE_THRESHOLD = 50 ether;
+  uint256 public constant SILVER_THRESHOLD = 300 ether;
+  uint256 public constant GOLD_THRESHOLD = 500 ether;
   uint256 public constant NFT_AMOUNT = 9;
 
   address public owner;

@@ -23,10 +23,10 @@
 
 .round-level-p {
   color: white;
-  font-size: 40px;
+  /* font-size: 40px; */
   font-weight: 500;
-  margin-top: 36px;
-  margin-bottom: 36px;
+  /* margin-top: 36px;
+  margin-bottom: 36px; */
 }
 
 .game-icon {

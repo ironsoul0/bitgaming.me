@@ -69,6 +69,14 @@ const users = [
     name: "Daulet.eth",
     avatar: "/av8.png",
   },
+  {
+    name: "Khafiz.eth",
+    avatar: "/av7.png",
+  },
+  {
+    name: "Daulet.eth",
+    avatar: "/av8.png",
+  },
 ];
 
 const UserRow: React.FC<any> = ({
@@ -85,13 +93,13 @@ const UserRow: React.FC<any> = ({
   return (
     <div className={clsx(["flex h-10 mx-2 justify-between", className])}>
       <div className="flex flex-col items-start justify-center">
-        <div className="flex items-center grid grid-cols-12 gap-2">
-          <div className="overflow-hidden col-span-1">
-            <p className="flex flex-col text-white truncate align-middle text-md font-regular">
+        <div className="flex items-center">
+          <div>
+            <p className="flex flex-col w-6 text-white truncate align-middle text-md font-regular">
               {index}
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center ml-1 col-span-2">
+          <div className="flex flex-col items-center justify-center ml-5 col-span-2">
             <div
               className="w-10 h-10 bg-gray-300 rounded-full"
               style={{
@@ -101,7 +109,7 @@ const UserRow: React.FC<any> = ({
               }}
             />
           </div>
-          <div className="ml-2 overflow-hidden col-span-9">
+          <div className="ml-6 w-28">
             <p className="flex flex-col text-white truncate align-middle text-md font-regular">
               {name}
             </p>
@@ -109,14 +117,14 @@ const UserRow: React.FC<any> = ({
               {address.substr(0, 10).concat("...")}
             </p>
           </div>
+          <p
+            style={{ borderColor: "#784FFE", color: "#E7DFFF" }}
+            className="flex items-center justify-center w-32 h-6 py-1 py-4 ml-32 text-xs font-bold border-2 rounded-md"
+          >
+            {score?.toFixed(1)}
+          </p>
         </div>
       </div>
-      <p
-        style={{ borderColor: "#784FFE", color: "#E7DFFF" }}
-        className="flex items-center justify-center w-32 py-1 py-4 text-xs font-bold border-2 rounded-md"
-      >
-        {score?.toFixed(1)} BIT
-      </p>
     </div>
   );
 };
@@ -134,14 +142,14 @@ const LeaderboardPage = () => {
                 <div className="ml-4">
                   <p className="text-3xl font-bold text-white">Leaderboard</p>
                   <p className="text-lg text-white opacity-80">
-                    All participants sorted by on-chain BIT tokens
+                    TOP 10 participants sorted by on-chain BIT tokens
                   </p>
                 </div>
               </div>
 
               <div className="animate-smooth-appear">
                 {leaderboard.length > 0 ? (
-                  leaderboard.map((user, index) => (
+                  [...leaderboard, ...leaderboard].map((user, index) => (
                     <UserRow
                       key={user.id}
                       name={users[index].name}
@@ -149,7 +157,7 @@ const LeaderboardPage = () => {
                       score={user.score}
                       address={user.address}
                       index={index + 1}
-                      className="mb-4"
+                      className="mb-6"
                     />
                   ))
                 ) : (

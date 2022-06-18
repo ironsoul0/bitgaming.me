@@ -1,3 +1,4 @@
+import { useEthers } from "@usedapp/core";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import React, { cloneElement, FC, useState } from "react";
@@ -19,6 +20,7 @@ export const GameTemplate: FC<Props> = ({
 }: Props) => {
   const [start, setStart] = useState(true);
   const router = useRouter();
+  const { account, activateBrowserWallet } = useEthers();
 
   const closeGame = () => {
     setStart(true);
@@ -47,10 +49,12 @@ export const GameTemplate: FC<Props> = ({
           {cloneElement(pregameText)}
 
           <button
-            onClick={() => setStart(false)}
+            onClick={
+              account ? () => setStart(false) : () => activateBrowserWallet()
+            }
             className="px-4 py-3 mt-2 font-bold text-white rounded focus:outline-none bg-purple-950 ring-purple-800 transition-all hover:ring-2"
           >
-            Start game
+            {account ? "Start game" : "Please connect your wallet"}
           </button>
         </>
       )}

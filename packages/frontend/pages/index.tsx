@@ -274,7 +274,7 @@ const IndexPage = () => {
             <div className="ml-4">
               <p className="text-3xl font-bold text-white">Rewards</p>
               <p className="text-lg text-white opacity-80">
-                All participants sorted by on-chain BIT tokens
+                Play games and claim exclusive NFTs!
               </p>
             </div>
           </div>

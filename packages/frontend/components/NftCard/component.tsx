@@ -35,8 +35,8 @@ export const NFTCard: React.FC<Props> = ({
           }}
         />
         <div className="absolute z-10 bottom-4 left-4">
-          <p className="text-xl text-white">{name}</p>
-          <p className="text-xs text-gray-300">{desc}</p>
+          <p className="text-xl font-bold text-black">{name}</p>
+          <p className="text-xs text-black">{desc}</p>
         </div>
         <button
           className="absolute z-10 hidden w-12 h-12 rounded-full top-4 right-4"
