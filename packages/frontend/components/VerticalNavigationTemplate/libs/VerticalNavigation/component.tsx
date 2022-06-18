@@ -1,11 +1,15 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 
 export const VerticalNavigation: React.FC = () => {
+  const router = useRouter();
+
+  console.log("router.pathname", router.pathname);
   return (
     <>
-      <div className="flex items-center justify-between w-full p-6 text-gray-800 dark:bg-gray-800 xl:hidden hover:text-black focus:outline-none focus:text-black">
-        <button className="flex items-center justify-between text-gray-800 dark:text-white space-x-3">
+      <div className="flex items-center justify-between w-full p-6 text-white bg-transparent xl:hidden focus:outline-none focus:text-black">
+        <button className="flex items-center justify-between text-white space-x-3">
           <svg
             width="34"
             height="34"
@@ -24,7 +28,7 @@ export const VerticalNavigation: React.FC = () => {
           <button
             id="open"
             aria-label="open"
-            className="hidden text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+            className="hidden text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
           >
             <svg
               width="24"
@@ -59,7 +63,7 @@ export const VerticalNavigation: React.FC = () => {
           <button
             id="close"
             aria-label="close"
-            className="text-gray-800 focus:outline-none dark:text-white focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+            className="text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
           >
             <svg
               width="24"
@@ -88,9 +92,9 @@ export const VerticalNavigation: React.FC = () => {
       </div>
       <div
         id="Main"
-        className="flex flex-col items-start justify-start w-full h-full bg-white dark:bg-gray-800 transform xl:translate-x-0 ease-in-out transition duration-500 sm:w-72"
+        className="flex flex-col items-start justify-start w-full h-full transform xl:translate-x-0 ease-in-out transition duration-500 sm:w-72"
       >
-        <button className="items-center justify-start hidden w-full px-6 pt-6 text-gray-800 xl:flex dark:text-white hover:text-black focus:outline-none focus:text-black space-x-3">
+        <button className="items-center justify-start hidden w-full px-6 pt-6 text-white xl:flex  focus:outline-none focus:text-black space-x-3">
           <svg
             width="34"
             height="34"
@@ -107,7 +111,13 @@ export const VerticalNavigation: React.FC = () => {
         </button>
         <div className="flex flex-col items-start justify-start w-full px-4 pb-5 xl:mt-6 space-y-3">
           <Link href="/">
-            <button className="flex items-center w-full py-3 pl-4 text-gray-600 rounded focus:outline-none dark:text-white jusitfy-start hover:text-white focus:bg-indigo-700 focus:text-white hover:bg-indigo-700 space-x-6">
+            <button
+              style={{
+                backgroundColor:
+                  router.pathname === "/" ? "rgb(55 65 81)" : "transparent",
+              }}
+              className="flex items-center w-full py-3 pl-4 text-white rounded focus:outline-none jusitfy-start hover:text-white hover:bg-gray-700 space-x-6"
+            >
               <svg
                 className="fill-stroke"
                 width="24"
@@ -145,12 +155,20 @@ export const VerticalNavigation: React.FC = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <p className="text-base leading-4">Dashboard</p>
+              <p className="text-base leading-4">Rewards</p>
             </button>
           </Link>
 
           <Link href="/leaderboard">
-            <button className="flex items-center w-full py-3 pl-4 text-gray-600 rounded focus:outline-none dark:text-white jusitfy-start hover:text-white focus:bg-indigo-700 focus:text-white hover:bg-indigo-700 space-x-6">
+            <button
+              style={{
+                backgroundColor:
+                  router.pathname === "/leaderboard"
+                    ? "rgb(55 65 81)"
+                    : "transparent",
+              }}
+              className="flex items-center w-full py-3 pl-4 text-white rounded focus:outline-none jusitfy-start hover:text-white hover:bg-gray-700 space-x-6"
+            >
               <svg
                 width="24"
                 height="24"
@@ -180,8 +198,16 @@ export const VerticalNavigation: React.FC = () => {
         <div className="w-full px-4">
           <hr className="w-full border-gray-100 dark:border-gray-700" />
         </div>
-        <div className="flex flex-col items-start justify-start w-full px-4 pb-5 mt-6 dark:text-white space-y-3">
-          <button className="flex items-center justify-start w-full py-3 pl-4 text-gray-600 rounded focus:outline-none dark:text-white hover:text-white focus:bg-indigo-700 focus:text-white hover:bg-indigo-700">
+        <div className="flex flex-col items-start justify-start w-full px-4 pb-5 mt-6 text-white space-y-3">
+          <button
+            style={{
+              backgroundColor:
+                router.pathname === "/chimpTest"
+                  ? "rgb(55 65 81)"
+                  : "transparent",
+            }}
+            className="flex items-center justify-start w-full py-3 pl-4 text-white rounded focus:outline-none hover:text-white hover:bg-gray-700"
+          >
             <div className="flex items-center justify-between w-full">
               <div className="flex items-center justify-start">
                 <svg
@@ -203,7 +229,15 @@ export const VerticalNavigation: React.FC = () => {
               </div>
             </div>
           </button>
-          <button className="flex items-center justify-start w-full py-3 pl-4 text-gray-600 rounded focus:outline-none dark:text-white space-x-6 hover:text-white focus:bg-indigo-700 focus:text-white hover:bg-indigo-700">
+          <button
+            style={{
+              backgroundColor:
+                router.pathname === "/numberMemory"
+                  ? "rgb(55 65 81)"
+                  : "transparent",
+            }}
+            className="flex items-center justify-start w-full py-3 pl-4 text-white rounded focus:outline-none space-x-6 hover:text-white hover:bg-gray-700"
+          >
             <svg
               width="24"
               height="24"
@@ -277,7 +311,15 @@ export const VerticalNavigation: React.FC = () => {
             </svg>
             <p className="text-base leading-4">Game 2</p>
           </button>
-          <button className="flex items-center justify-start w-full py-3 pl-4 text-gray-600 rounded focus:outline-none dark:text-white space-x-6 hover:text-white focus:bg-indigo-700 focus:text-white hover:bg-indigo-700">
+          <button
+            style={{
+              backgroundColor:
+                router.pathname === "/reactionTime"
+                  ? "rgb(55 65 81)"
+                  : "transparent",
+            }}
+            className="flex items-center justify-start w-full py-3 pl-4 text-white rounded focus:outline-none space-x-6 hover:text-white hover:bg-gray-700"
+          >
             <svg
               width="24"
               height="24"

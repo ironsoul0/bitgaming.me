@@ -24,7 +24,7 @@ export const UserRow: React.FC<any> = ({
       <div className="flex flex-col items-start justify-center col-span-6">
         <div className="flex items-center grid grid-cols-12 gap-2">
           <div className="overflow-hidden col-span-1">
-            <p className="flex flex-col truncate align-middle text-md font-regular">
+            <p className="flex flex-col text-white truncate align-middle text-md font-regular">
               {index}
             </p>
           </div>
@@ -39,17 +39,17 @@ export const UserRow: React.FC<any> = ({
             />
           </div>
           <div className="overflow-hidden col-span-9">
-            <p className="flex flex-col truncate align-middle text-md font-regular">
+            <p className="flex flex-col text-white truncate align-middle text-md font-regular">
               {name}
             </p>
-            <p className="flex flex-col text-sm text-gray-500 truncate align-middle font-regular">
+            <p className="flex flex-col text-sm text-gray-400 truncate align-middle font-regular">
               {address.substr(0, 10).concat("...")}
             </p>
           </div>
         </div>
       </div>
-      <p className="flex items-center justify-center w-20 py-1 text-sm font-bold bg-gray-300 rounded-md">
-        {score?.toFixed(1)}
+      <p className="flex items-center justify-end w-32 py-1 pr-4 text-xs font-bold text-white border-2 border-gray-400 rounded-md">
+        {score?.toFixed(1)} BIT
       </p>
     </div>
   );
@@ -96,7 +96,7 @@ const LeaderboardPage = () => {
           {leaderboard && (
             <div>
               <div className="mx-2 animate-smooth-appear">
-                <p className="mb-10 text-4xl font-bold">
+                <p className="mb-10 text-4xl font-bold text-white">
                   Game points leaderboard
                 </p>
               </div>

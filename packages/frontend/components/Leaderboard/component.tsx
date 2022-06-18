@@ -11,7 +11,6 @@ const default_avatar =
 
 export const UserRow: React.FC<any> = ({
   name,
-  lastname,
   score,
   avatar,
   className,
@@ -36,8 +35,8 @@ export const UserRow: React.FC<any> = ({
             />
           </div>
           <div className="ml-2 overflow-hidden col-span-10">
-            <p className="flex flex-col text-lg truncate align-middle font-regular">
-              {name + " " + lastname}
+            <p className="flex flex-col text-lg text-white truncate align-middle font-regular">
+              {name}
             </p>
           </div>
         </div>
