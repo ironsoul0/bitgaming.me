@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import React, { HTMLAttributes } from "react";
 
 export type Props = HTMLAttributes<HTMLDivElement> & {
   name: string;
@@ -6,4 +6,6 @@ export type Props = HTMLAttributes<HTMLDivElement> & {
   icon: React.ReactElement;
   activeGame: boolean;
   setActiveGame: (x: boolean) => void;
+  pregameText: React.ReactElement;
+  gameDesc: React.ReactElement;
 };

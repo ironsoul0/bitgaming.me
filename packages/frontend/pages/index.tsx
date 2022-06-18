@@ -2,7 +2,7 @@ import { useContractFunction, useEtherBalance, useEthers } from "@usedapp/core";
 import clsx from "clsx";
 import { chainReadProvider } from "config";
 import { useCoinsContext } from "config/context";
-import { BITContract } from "config/contracts";
+import { BITContract, NFTContract } from "config/contracts";
 import { SyncIcon } from "core";
 import { Contract, ethers, utils } from "ethers";
 import React, {
@@ -13,6 +13,7 @@ import React, {
   useState,
 } from "react";
 import { toast } from "react-toastify";
+import { BrainNFT } from "types/typechain";
 import { BITToken } from "types/typechain/BITToken";
 
 import { NFTCard, VerticalNavigationTemplate } from "../components";
@@ -20,12 +21,16 @@ import { NFTCard, VerticalNavigationTemplate } from "../components";
 const default_avatar =
   "https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3.png";
 
+const BRONZE_THRESHOLD = 10;
+const SILVER_THRESHOLD = 20;
+const GOLD_THRESHOLD = 30;
+
 const bronzeNFT = [
   {
     image: "https://ironsoul0.github.io/bronze/brain1.png",
     name: "Smally brain",
     description: "The brains of crypto beginners.",
-    requiredScore: "Requires 500 on-chain BIT",
+    requiredScore: "Requires 300 on-chain BIT",
     gen: "gen 1 - 1",
     supply: "supply: 12323",
   },
@@ -33,7 +38,7 @@ const bronzeNFT = [
     image: "https://ironsoul0.github.io/bronze/brain2.png",
     name: "Mini brain",
     description: "Another type of brains of crypto beginners.",
-    requiredScore: "Requires 900 on-chain BIT",
+    requiredScore: "Requires 300 on-chain BIT",
     gen: "gen 1 - 2",
     supply: "supply: 21321",
   },
@@ -43,7 +48,7 @@ const silverNFT = [
     image: "https://ironsoul0.github.io/silver/brain1.png",
     name: "Miner's brain",
     description: "The brain of average mining enjoyer.",
-    requiredScore: "Requires 1000 on-chain BIT",
+    requiredScore: "Requires 800 on-chain BIT",
     gen: "gen 2 - 1",
     supply: "supply: 423",
   },
@@ -51,7 +56,7 @@ const silverNFT = [
     image: "https://ironsoul0.github.io/silver/brain2.png",
     name: "Average brain",
     description: "The brain of experienced crypto dog.",
-    requiredScore: "Requires 1200 on-chain BIT",
+    requiredScore: "Requires 800 on-chain BIT",
     gen: "gen 2 - 2",
     supply: "supply: 321",
   },
@@ -59,7 +64,7 @@ const silverNFT = [
     image: "https://ironsoul0.github.io/silver/brain3.png",
     name: "Axis brain",
     description: "The geek brains of the geek personality.",
-    requiredScore: "Requires 1200 on-chain BIT",
+    requiredScore: "Requires 800 on-chain BIT",
     gen: "gen 2 - 3",
     supply: "supply: 453",
   },
@@ -67,7 +72,7 @@ const silverNFT = [
     image: "https://ironsoul0.github.io/silver/brain4.png",
     name: "Middly brain",
     description: "The brain of average mining enjoyer.",
-    requiredScore: "Requires 1400 on-chain BIT",
+    requiredScore: "Requires 800 on-chain BIT",
     gen: "gen 2 - 4",
     supply: "supply: 233",
   },
@@ -75,7 +80,7 @@ const silverNFT = [
     image: "https://ironsoul0.github.io/silver/brain5.png",
     name: "Minted brain",
     description: "The brain that undergo minting.",
-    requiredScore: "Requires 1500 on-chain BIT",
+    requiredScore: "Requires 800 on-chain BIT",
     gen: "gen 2 - 5",
     supply: "supply: 195",
   },
@@ -85,7 +90,7 @@ const goldNFT = [
     image: "https://ironsoul0.github.io/gold/brain1.gif",
     name: "Geek brain",
     description: "The brain of the real geek.",
-    requiredScore: "Requires 1800 on-chain BIT",
+    requiredScore: "Requires 1500 on-chain BIT",
     gen: "gen 5 - 1",
     supply: "supply: 23",
   },
@@ -93,7 +98,7 @@ const goldNFT = [
     image: "https://ironsoul0.github.io/gold/brain2.gif",
     name: "Jet brain",
     description: "The brain of the real jet man.",
-    requiredScore: "Requires 2000 on-chain BIT",
+    requiredScore: "Requires 1500 on-chain BIT",
     gen: "gen 5 - 2",
     supply: "supply: 10",
   },
@@ -115,18 +120,43 @@ export const useBitContract = () => {
   return contract;
 };
 
+export const useNFTContract = () => {
+  const { account, library } = useEthers();
+
+  const contract = useMemo(
+    () =>
+      new Contract(
+        NFTContract.address,
+        NFTContract.abi,
+        account ? library?.getSigner() : chainReadProvider
+      ),
+    [account, library]
+  ) as BrainNFT;
+
+  return contract;
+};
+
 const IndexPage = () => {
   const toastRef = useRef<any>(null);
   const { account } = useEthers();
   const etherBalance = useEtherBalance(account);
   const { coins, setCoins } = useCoinsContext();
-  const [synced, setSynced] = useState("0");
+  const [synced, setSynced] = useState(0);
+  const [ownershipCount, setOwnershipCount] = useState<number[]>([]);
   const bitContract = useBitContract();
+  const nftContract = useNFTContract();
   const { state, send } = useContractFunction(
     bitContract as any,
     "claimTokens",
     {
       transactionName: "claimTokens",
+    }
+  );
+  const { state: nftState, send: nftSend } = useContractFunction(
+    nftContract as any,
+    "claimNFT",
+    {
+      transactionName: "claimNFT",
     }
   );
 
@@ -143,16 +173,32 @@ const IndexPage = () => {
     send(utils.parseEther(coins.toString()));
   }, [coins, send]);
 
+  const claimCard = useCallback(
+    async (nftIndex: number) => {
+      nftSend(nftIndex);
+    },
+    [nftSend]
+  );
+
   const fetchSynced = useCallback(async () => {
     if (!account) return;
     const myBalance = await bitContract.balanceOf(account);
     const balance = ethers.utils.formatEther(myBalance);
-    setSynced(balance.substring(0, balance.length - 2));
+    setSynced(parseInt(balance.substring(0, balance.length - 2), 10));
   }, [bitContract, account]);
+
+  const fetchOwnership = useCallback(async () => {
+    if (!account) return;
+    const ownership = await nftContract.getOwnershipCount(account);
+    const count = ownership.map((o) => o.toNumber());
+    console.log("ownershipCount", count);
+    setOwnershipCount(count);
+  }, [nftContract, account]);
 
   useEffect(() => {
     fetchSynced();
-  }, [account, fetchSynced]);
+    fetchOwnership();
+  }, [account, fetchSynced, fetchOwnership]);
 
   useEffect(() => {
     if (state.status === "Mining") {
@@ -164,10 +210,12 @@ const IndexPage = () => {
         isLoading: false,
         progress: 50,
       });
+
       const id = setTimeout(() => {
         toast.dismiss(toastRef.current);
         clearTimeout(id);
       }, 2000);
+
       fetchSynced();
       setCoins(0);
       localStorage.setItem("coins", "0");
@@ -177,12 +225,45 @@ const IndexPage = () => {
         type: "error",
         isLoading: false,
       });
+
       const id = setTimeout(() => {
         toast.dismiss(toastRef.current);
         clearTimeout(id);
       }, 2000);
     }
   }, [state, setCoins, fetchSynced]);
+
+  useEffect(() => {
+    if (nftState.status === "Mining") {
+      toastRef.current = toast.loading("Mining your transaction..");
+    } else if (nftState.status === "Success") {
+      toast.update(toastRef.current, {
+        render: "Successfuly minted NFT for you",
+        type: "success",
+        isLoading: false,
+        progress: 50,
+      });
+
+      const id = setTimeout(() => {
+        toast.dismiss(toastRef.current);
+        clearTimeout(id);
+      }, 2000);
+
+      fetchOwnership();
+      fetchSynced();
+    } else if (nftState.status === "Exception" || nftState.status === "Fail") {
+      toast.update(toastRef.current, {
+        render: "Failed to mint NFT",
+        type: "error",
+        isLoading: false,
+      });
+
+      const id = setTimeout(() => {
+        toast.dismiss(toastRef.current);
+        clearTimeout(id);
+      }, 2000);
+    }
+  }, [nftState, fetchOwnership, fetchSynced]);
 
   return (
     <VerticalNavigationTemplate>
@@ -242,43 +323,58 @@ const IndexPage = () => {
             </div>
           </div>
 
-          <p className="mt-8 text-2xl font-bold text-red-400">Bronze NFTs</p>
-          <div className="mt-4 grid grid-cols-12 gap-4 animate-smooth-appear">
-            {bronzeNFT.map((n) => (
-              <div key={n.image} className="col-span-6">
-                <NFTCard
-                  imageUrl={n.image}
-                  name={n.name}
-                  desc={n.requiredScore}
-                  contentLeft={n.gen}
-                  contentRight={n.supply}
-                  contentMain={n.description}
-                  handleClick={() => console.log("hi 1")}
-                />
-              </div>
-            ))}
+          <div className="animate-smooth-appear">
+            <p className="inline-block px-4 py-2 mt-8 text-xl text-white rounded-md bg-gray-750">
+              Regular
+            </p>
+            <div className="mt-4 grid grid-cols-12 gap-4">
+              {bronzeNFT.map((n, i) => (
+                <div key={n.image} className="col-span-6">
+                  <NFTCard
+                    imageUrl={n.image}
+                    name={n.name}
+                    desc={n.requiredScore}
+                    contentLeft={n.gen}
+                    contentRight={n.supply}
+                    contentMain={n.description}
+                    handleClick={() => claimCard(i)}
+                    insufficient={synced < BRONZE_THRESHOLD}
+                    owned={!!ownershipCount[i]}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
-          <p className="mt-8 text-2xl font-bold text-gray-300">Silver NFTs</p>
-          <div className="mt-4 grid grid-cols-12 gap-x-4 gap-y-8 animate-smooth-appear">
-            {silverNFT.map((n) => (
-              <div key={n.image} className="col-span-6">
-                <NFTCard
-                  imageUrl={n.image}
-                  name={n.name}
-                  desc={n.requiredScore}
-                  contentLeft={n.gen}
-                  contentRight={n.supply}
-                  contentMain={n.description}
-                  handleClick={() => console.log("hi 1")}
-                />
-              </div>
-            ))}
+          <div className="animate-smooth-appear">
+            {/* <p className="mt-8 text-2xl font-bold text-gray-300">Silver NFTs</p> */}
+            <p className="inline-block px-4 py-2 mt-8 text-xl text-white rounded-md bg-gray-750 silver">
+              Silver
+            </p>
+            <div className="mt-4 grid grid-cols-12 gap-x-4 gap-y-8 animate-smooth-appear">
+              {silverNFT.map((n, i) => (
+                <div key={n.image} className="col-span-6">
+                  <NFTCard
+                    imageUrl={n.image}
+                    name={n.name}
+                    desc={n.requiredScore}
+                    contentLeft={n.gen}
+                    contentRight={n.supply}
+                    contentMain={n.description}
+                    handleClick={() => claimCard(i + 2)}
+                    insufficient={synced < SILVER_THRESHOLD}
+                    owned={!!ownershipCount[i + 2]}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
-          <p className="mt-8 text-2xl font-bold text-yellow-500">Gold NFTs</p>
+          <p className="inline-block px-4 py-2 mt-8 text-xl text-white rounded-md bg-gray-750 gold">
+            Gold
+          </p>
           <div className="mt-4 grid grid-cols-12 gap-4 animate-smooth-appear">
-            {goldNFT.map((n) => (
+            {goldNFT.map((n, i) => (
               <div key={n.image} className="col-span-6">
                 <NFTCard
                   imageUrl={n.image}
@@ -287,7 +383,9 @@ const IndexPage = () => {
                   contentLeft={n.gen}
                   contentRight={n.supply}
                   contentMain={n.description}
-                  handleClick={() => console.log("hi 1")}
+                  handleClick={() => claimCard(i + 7)}
+                  insufficient={synced < GOLD_THRESHOLD}
+                  owned={!!ownershipCount[i + 7]}
                 />
               </div>
             ))}

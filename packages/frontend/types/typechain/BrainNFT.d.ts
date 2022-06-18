@@ -30,7 +30,7 @@ interface BrainNFTInterface extends ethers.utils.Interface {
     "bitToken()": FunctionFragment;
     "claimNFT(uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
-    "getOwnershipCount(address,uint256)": FunctionFragment;
+    "getOwnershipCount(address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
@@ -76,7 +76,7 @@ interface BrainNFTInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getOwnershipCount",
-    values: [string, BigNumberish]
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
@@ -268,9 +268,8 @@ export class BrainNFT extends BaseContract {
 
     getOwnershipCount(
       user: string,
-      nftIndex: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    ): Promise<[BigNumber[]]>;
 
     isApprovedForAll(
       owner: string,
@@ -363,9 +362,8 @@ export class BrainNFT extends BaseContract {
 
   getOwnershipCount(
     user: string,
-    nftIndex: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  ): Promise<BigNumber[]>;
 
   isApprovedForAll(
     owner: string,
@@ -449,9 +447,8 @@ export class BrainNFT extends BaseContract {
 
     getOwnershipCount(
       user: string,
-      nftIndex: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    ): Promise<BigNumber[]>;
 
     isApprovedForAll(
       owner: string,
@@ -592,7 +589,6 @@ export class BrainNFT extends BaseContract {
 
     getOwnershipCount(
       user: string,
-      nftIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -691,7 +687,6 @@ export class BrainNFT extends BaseContract {
 
     getOwnershipCount(
       user: string,
-      nftIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

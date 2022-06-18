@@ -8,6 +8,8 @@ interface Props {
   contentRight: string;
   contentMain: string;
   handleClick?: () => void;
+  insufficient: boolean;
+  owned?: boolean;
 }
 
 export const NFTCard: React.FC<Props> = ({
@@ -18,6 +20,8 @@ export const NFTCard: React.FC<Props> = ({
   contentRight,
   contentMain,
   handleClick,
+  insufficient,
+  owned,
 }: Props) => {
   return (
     <div style={{ border: "1px solid #2c3a43" }} className="rounded-2xl">
@@ -35,7 +39,7 @@ export const NFTCard: React.FC<Props> = ({
           <p className="text-xs text-gray-300">{desc}</p>
         </div>
         <button
-          className="absolute z-10 w-12 h-12 rounded-full top-4 right-4"
+          className="absolute z-10 hidden w-12 h-12 rounded-full top-4 right-4"
           onClick={handleClick}
         >
           <img alt="icon" src="/hammer.svg" />
@@ -55,13 +59,25 @@ export const NFTCard: React.FC<Props> = ({
           {contentMain}
         </p>
 
-        <button
-          style={{ width: "100%" }}
-          onClick={() => console.log("mint")}
-          className="px-4 py-3 my-2 mt-2 font-bold text-white rounded focus:outline-none bg-purple-950 ring-purple-800 transition-all hover:ring-2"
-        >
-          Mint NFT Card
-        </button>
+        {!insufficient && !owned && (
+          <button
+            style={{ width: "100%" }}
+            onClick={handleClick}
+            className="block px-4 py-3 my-2 mt-2 font-bold text-white rounded focus:outline-none bg-purple-950 ring-purple-800 transition-all hover:ring-2"
+          >
+            Mint NFT Card
+          </button>
+        )}
+        {insufficient && !owned && (
+          <div className="px-4 py-3 my-2 mt-2 font-bold text-center text-white rounded focus:outline-none transition-all bg-gray-750">
+            <p>Insufficient BIT tokens</p>
+          </div>
+        )}
+        {owned && (
+          <div className="px-4 py-3 my-2 mt-2 font-bold text-center text-white rounded focus:outline-none transition-all bg-gray-750">
+            <p>Already owned</p>
+          </div>
+        )}
       </div>
     </div>
   );

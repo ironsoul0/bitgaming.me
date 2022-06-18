@@ -7,8 +7,8 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "./BITToken.sol";
 
 contract BrainNFT is ERC721URIStorage {
-  uint256 public constant BRONZE_THRESHOLD = 50 ether;
-  uint256 public constant SILVER_THRESHOLD = 150 ether;
+  uint256 public constant BRONZE_THRESHOLD = 10 ether;
+  uint256 public constant SILVER_THRESHOLD = 20 ether;
   uint256 public constant GOLD_THRESHOLD = 300 ether;
   uint256 public constant NFT_AMOUNT = 9;
 
@@ -45,19 +45,23 @@ contract BrainNFT is ERC721URIStorage {
 
     BITToken(bitToken).burnTokens(msg.sender, tokens);
     uint256 newItemId = _tokenIds.current();
-    _setTokenURI(newItemId, string(abi.encodePacked(nftIndex)));
     _mint(msg.sender, newItemId);
+    _setTokenURI(newItemId, string(abi.encodePacked(nftIndex)));
     _tokenIds.increment();
 
     ownerCounter[msg.sender][nftIndex]++;
   }
 
-  function getOwnershipCount(address user, uint256 nftIndex)
+  function getOwnershipCount(address user)
     external
     view
-    returns (uint256)
+    returns (uint256[] memory)
   {
-    return ownerCounter[user][nftIndex];
+    uint256[] memory count = new uint256[](NFT_AMOUNT);
+    for (uint256 i = 0; i < NFT_AMOUNT; i++) {
+      count[i] = ownerCounter[user][i];
+    }
+    return count;
   }
 
   modifier onlyOwner() {

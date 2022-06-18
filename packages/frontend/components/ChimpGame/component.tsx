@@ -121,9 +121,6 @@ export const ChimpGame = () => {
   const pregameText = (
     <>
       <div className="flex items-center mt-2 text-white">
-        {/* {cloneElement(icon, {
-          className: "text-white w-30 -ml-4 h-32",
-        })} */}
         <ChimpIcon className="h-32 -ml-4 text-white w-30" />
         <div>
           <h2 className="text-4xl font-bold text-white fade">Chimpanze test</h2>
@@ -158,6 +155,19 @@ export const ChimpGame = () => {
     </>
   );
 
+  const gameDesc = (
+    <div className="text-center animate-smooth-appear">
+      <ChimpIcon className="w-32 mx-auto text-white animate-pulse-fast" />
+      <h2 className="text-4xl font-bold text-white fade">Chimpanze</h2>
+      <p className="mt-5 text-2xl text-white">
+        Click the squares in order according to their numbers.
+      </p>
+      <p className="mt-2 text-2xl text-white">
+        The test will get progressively harder.
+      </p>
+    </div>
+  );
+
   return (
     <VerticalNavigationTemplate>
       <GameTemplate
@@ -167,6 +177,8 @@ export const ChimpGame = () => {
         activeGame={activeGame}
         setActiveGame={setActiveGame}
         className="px-4"
+        pregameText={pregameText}
+        gameDesc={gameDesc}
       >
         {gameState.mode === MODES.Question && (
           <div className="w-full grid grid-cols-5 grid-rows-5 gap-2">
