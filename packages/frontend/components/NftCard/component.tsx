@@ -8,7 +8,6 @@ interface Props {
   contentRight: string;
   contentMain: string;
   handleClick?: () => void;
-  handleSecondClick?: () => void;
 }
 
 export const NFTCard: React.FC<Props> = ({
@@ -19,16 +18,16 @@ export const NFTCard: React.FC<Props> = ({
   contentRight,
   contentMain,
   handleClick,
-  handleSecondClick,
 }: Props) => {
   return (
     <div style={{ border: "1px solid #2c3a43" }} className="rounded-2xl">
-      <div className="relative px-24 pt-2 pb-4">
+      <div className="relative">
         <div
-          className="w-40 h-40 rounded-lg"
+          className="rounded-lg h-60"
           style={{
             backgroundImage: "url(" + imageUrl + ")",
-            backgroundSize: "cover",
+            backgroundSize: "contain",
+            backgroundRepeat: "none",
           }}
         />
         <div className="absolute z-10 bottom-4 left-4">
@@ -36,21 +35,11 @@ export const NFTCard: React.FC<Props> = ({
           <p className="text-xs text-gray-300">{desc}</p>
         </div>
         <button
-          className="absolute z-10 w-8 h-8 rounded-full top-4 right-4"
-          style={{
-            backgroundImage: "url(" + imageUrl + ")",
-            backgroundSize: "cover",
-          }}
+          className="absolute z-10 w-12 h-12 rounded-full top-4 right-4"
           onClick={handleClick}
-        />
-        <button
-          className="absolute z-10 w-8 h-8 rounded-full top-16 right-4"
-          style={{
-            backgroundImage: "url(" + imageUrl + ")",
-            backgroundSize: "cover",
-          }}
-          onClick={handleSecondClick}
-        />
+        >
+          <img alt="icon" src="/hammer.svg" />
+        </button>
       </div>
       <hr
         style={{
@@ -62,9 +51,17 @@ export const NFTCard: React.FC<Props> = ({
           <p className="text-xs text-gray-300 uppercase">{contentLeft}</p>
           <p className="text-xs text-gray-300 uppercase">{contentRight}</p>
         </div>
-        <p className="mt-4 overflow-hidden text-xs italic text-gray-300">
+        <p className="my-4 overflow-hidden text-xs italic text-gray-300">
           {contentMain}
         </p>
+
+        <button
+          style={{ width: "100%" }}
+          onClick={() => console.log("mint")}
+          className="px-4 py-3 my-2 mt-2 font-bold text-white rounded focus:outline-none bg-purple-950 ring-purple-800 transition-all hover:ring-2"
+        >
+          Mint NFT Card
+        </button>
       </div>
     </div>
   );
