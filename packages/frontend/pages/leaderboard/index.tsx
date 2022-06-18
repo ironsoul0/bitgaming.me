@@ -21,7 +21,7 @@ export const UserRow: React.FC<any> = ({
         className,
       ])}
     >
-      <div className="flex flex-col items-start justify-center col-span-6">
+      <div className="flex flex-col items-start justify-center">
         <div className="flex items-center grid grid-cols-12 gap-2">
           <div className="overflow-hidden col-span-1">
             <p className="flex flex-col text-white truncate align-middle text-md font-regular">
@@ -92,7 +92,7 @@ const LeaderboardPage = () => {
   return (
     <>
       <VerticalNavigationTemplate>
-        <div className="mt-5 ml-5">
+        <div className="mt-4 ml-10">
           {leaderboard && (
             <div>
               <div className="mx-2 animate-smooth-appear">

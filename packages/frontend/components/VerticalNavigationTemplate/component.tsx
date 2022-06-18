@@ -8,14 +8,10 @@ export const VerticalNavigationTemplate: React.FC = ({ children }: any) => {
       className="flex mx-auto max-w-screen-lg items-top"
       style={{ height: "100vh" }}
     >
-      <div
-        style={{
-          borderRight: "1px solid gray",
-        }}
-      >
+      <div>
         <VerticalNavigation />
       </div>
-      <div className="overflow-hidden">{children}</div>
+      <div className="flex-1">{children}</div>
     </div>
   );
 };
