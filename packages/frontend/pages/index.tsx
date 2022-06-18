@@ -35,8 +35,12 @@ const IndexPage = () => {
 
   useEffect(() => {
     const fetchGreeting = async () => {
-      const greeting = await contract.greeting();
-      setGreeting(greeting);
+      try {
+        const greeting = await contract.greeting();
+        setGreeting(greeting);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     fetchGreeting();
