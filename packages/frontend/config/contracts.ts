@@ -1,5 +1,6 @@
 import { ChainId } from "@usedapp/core";
 import BITToken from "artifacts/contracts/BITToken.sol/BITToken.json";
+import BrainNFT from "artifacts/contracts/BrainNFT.sol/BrainNFT.json";
 import YourContract from "artifacts/contracts/YourContract.sol/YourContract.json";
 import { ChainIDUrl, TARGET_CHAIN } from "config";
 import { ethers } from "ethers";
@@ -10,7 +11,12 @@ const myContractAddresses: ChainIDUrl = {
 };
 
 const bitTokenAddresses: ChainIDUrl = {
-  [ChainId.Hardhat]: "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+  [ChainId.Hardhat]: "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
+  [ChainId.Ropsten]: "0xB394202a75BB251DC3CC45FbD324C44c233FE3F4",
+};
+
+const nftTokenAddresses: ChainIDUrl = {
+  [ChainId.Hardhat]: "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
   [ChainId.Ropsten]: "0xB394202a75BB251DC3CC45FbD324C44c233FE3F4",
 };
 
@@ -23,6 +29,11 @@ export const MyContract = {
 export const BITContract = {
   abi: BITToken.abi,
   address: bitTokenAddresses[TARGET_CHAIN],
+};
+
+export const NFTContract = {
+  abi: BrainNFT.abi,
+  address: nftTokenAddresses[TARGET_CHAIN],
 };
 
 export const Multicall = {

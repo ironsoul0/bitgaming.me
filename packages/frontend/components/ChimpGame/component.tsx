@@ -118,6 +118,46 @@ export const ChimpGame = () => {
     router.push("/");
   };
 
+  const pregameText = (
+    <>
+      <div className="flex items-center mt-2 text-white">
+        {/* {cloneElement(icon, {
+          className: "text-white w-30 -ml-4 h-32",
+        })} */}
+        <ChimpIcon className="h-32 -ml-4 text-white w-30" />
+        <div>
+          <h2 className="text-4xl font-bold text-white fade">Chimpanze test</h2>
+          <p className="mt-2 text-xl text-white">
+            Are You Smarter Than a Chimpanzee?
+          </p>
+        </div>
+      </div>
+      <div className="mt-4 mb-4 text-white">
+        <p className="mb-5 text-xl font-bold text-white">Description</p>
+        <p className="mb-4 text-white">
+          This is a test of working memory, made famous by a study that found
+          that chimpanzees consistently outperform humans on this task. In the
+          study, the chimps consistently outperformed humans, and some chimps
+          were able to remember 9 digits over 90% of the time.
+        </p>
+        <p className="text-white">
+          Variant of that concept, that gets increasingly difficult every turn,
+          starting at 4 digits, and adding one every turn. If you pass a level,
+          the number increases. If you fail, you get a strike. Three strikes and
+          the test is over.
+        </p>
+        <div className="mt-4">
+          <p>
+            <b>Difficulty: </b>7
+          </p>
+          <p>
+            <b>Coins per level: </b>5 BIT
+          </p>
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <VerticalNavigationTemplate>
       <GameTemplate

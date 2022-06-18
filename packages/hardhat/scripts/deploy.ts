@@ -1,5 +1,7 @@
 import { ethers } from "hardhat";
 
+const BASE_URI = "https://ironsoul0.github.io/brain/";
+
 async function main() {
   const YourContract = await ethers.getContractFactory("YourContract");
   const contract = await YourContract.deploy("Hello, Hardhat!");
@@ -19,9 +21,7 @@ async function main() {
   const BrainToken = await ethers.getContractFactory("BrainNFT");
   const brainContract = await BrainToken.deploy(
     tokenContract.address,
-    [],
-    [],
-    []
+    BASE_URI
   );
   await brainContract.deployed();
   console.log("Brain NFT contract deployed to:", brainContract.address);

@@ -21,22 +21,23 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 
 interface BrainNFTInterface extends ethers.utils.Interface {
   functions: {
-    "HIGH_THRESHOLD()": FunctionFragment;
-    "MEDIUM_THRESHOLD()": FunctionFragment;
+    "BRONZE_THRESHOLD()": FunctionFragment;
+    "GOLD_THRESHOLD()": FunctionFragment;
+    "NFT_AMOUNT()": FunctionFragment;
+    "SILVER_THRESHOLD()": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "bitToken()": FunctionFragment;
     "claimNFT(uint256)": FunctionFragment;
     "getApproved(uint256)": FunctionFragment;
-    "highURI(uint256)": FunctionFragment;
+    "getOwnershipCount(address,uint256)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "lowURI(uint256)": FunctionFragment;
-    "mediumURI(uint256)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
+    "setBaseURI(string)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "symbol()": FunctionFragment;
     "tokenURI(uint256)": FunctionFragment;
@@ -44,11 +45,19 @@ interface BrainNFTInterface extends ethers.utils.Interface {
   };
 
   encodeFunctionData(
-    functionFragment: "HIGH_THRESHOLD",
+    functionFragment: "BRONZE_THRESHOLD",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "MEDIUM_THRESHOLD",
+    functionFragment: "GOLD_THRESHOLD",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "NFT_AMOUNT",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "SILVER_THRESHOLD",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -66,20 +75,12 @@ interface BrainNFTInterface extends ethers.utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "highURI",
-    values: [BigNumberish]
+    functionFragment: "getOwnershipCount",
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "isApprovedForAll",
     values: [string, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "lowURI",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mediumURI",
-    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
@@ -95,6 +96,7 @@ interface BrainNFTInterface extends ethers.utils.Interface {
     functionFragment: "setApprovalForAll",
     values: [string, boolean]
   ): string;
+  encodeFunctionData(functionFragment: "setBaseURI", values: [string]): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike]
@@ -110,11 +112,16 @@ interface BrainNFTInterface extends ethers.utils.Interface {
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "HIGH_THRESHOLD",
+    functionFragment: "BRONZE_THRESHOLD",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "MEDIUM_THRESHOLD",
+    functionFragment: "GOLD_THRESHOLD",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "NFT_AMOUNT", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "SILVER_THRESHOLD",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
@@ -125,13 +132,14 @@ interface BrainNFTInterface extends ethers.utils.Interface {
     functionFragment: "getApproved",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "highURI", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getOwnershipCount",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "lowURI", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "mediumURI", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
@@ -143,6 +151,7 @@ interface BrainNFTInterface extends ethers.utils.Interface {
     functionFragment: "setApprovalForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "setBaseURI", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
     data: BytesLike
@@ -229,9 +238,13 @@ export class BrainNFT extends BaseContract {
   interface: BrainNFTInterface;
 
   functions: {
-    HIGH_THRESHOLD(overrides?: CallOverrides): Promise<[BigNumber]>;
+    BRONZE_THRESHOLD(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    MEDIUM_THRESHOLD(overrides?: CallOverrides): Promise<[BigNumber]>;
+    GOLD_THRESHOLD(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    NFT_AMOUNT(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    SILVER_THRESHOLD(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     approve(
       to: string,
@@ -244,7 +257,7 @@ export class BrainNFT extends BaseContract {
     bitToken(overrides?: CallOverrides): Promise<[string]>;
 
     claimNFT(
-      tokens: BigNumberish,
+      nftIndex: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -253,17 +266,17 @@ export class BrainNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    highURI(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getOwnershipCount(
+      user: string,
+      nftIndex: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
-
-    lowURI(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
-
-    mediumURI(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -295,6 +308,11 @@ export class BrainNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    setBaseURI(
+      baseURI_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
@@ -315,9 +333,13 @@ export class BrainNFT extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  HIGH_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
+  BRONZE_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
 
-  MEDIUM_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
+  GOLD_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
+
+  NFT_AMOUNT(overrides?: CallOverrides): Promise<BigNumber>;
+
+  SILVER_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
     to: string,
@@ -330,7 +352,7 @@ export class BrainNFT extends BaseContract {
   bitToken(overrides?: CallOverrides): Promise<string>;
 
   claimNFT(
-    tokens: BigNumberish,
+    nftIndex: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -339,17 +361,17 @@ export class BrainNFT extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  highURI(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getOwnershipCount(
+    user: string,
+    nftIndex: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   isApprovedForAll(
     owner: string,
     operator: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
-
-  lowURI(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-  mediumURI(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
@@ -378,6 +400,11 @@ export class BrainNFT extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  setBaseURI(
+    baseURI_: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   supportsInterface(
     interfaceId: BytesLike,
     overrides?: CallOverrides
@@ -395,9 +422,13 @@ export class BrainNFT extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    HIGH_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
+    BRONZE_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
 
-    MEDIUM_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
+    GOLD_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
+
+    NFT_AMOUNT(overrides?: CallOverrides): Promise<BigNumber>;
+
+    SILVER_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
       to: string,
@@ -409,24 +440,24 @@ export class BrainNFT extends BaseContract {
 
     bitToken(overrides?: CallOverrides): Promise<string>;
 
-    claimNFT(tokens: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    claimNFT(nftIndex: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     getApproved(
       tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
 
-    highURI(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getOwnershipCount(
+      user: string,
+      nftIndex: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    lowURI(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-    mediumURI(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -454,6 +485,8 @@ export class BrainNFT extends BaseContract {
       approved: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    setBaseURI(baseURI_: string, overrides?: CallOverrides): Promise<void>;
 
     supportsInterface(
       interfaceId: BytesLike,
@@ -529,9 +562,13 @@ export class BrainNFT extends BaseContract {
   };
 
   estimateGas: {
-    HIGH_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
+    BRONZE_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
 
-    MEDIUM_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
+    GOLD_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
+
+    NFT_AMOUNT(overrides?: CallOverrides): Promise<BigNumber>;
+
+    SILVER_THRESHOLD(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
       to: string,
@@ -544,7 +581,7 @@ export class BrainNFT extends BaseContract {
     bitToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     claimNFT(
-      tokens: BigNumberish,
+      nftIndex: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -553,18 +590,15 @@ export class BrainNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    highURI(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getOwnershipCount(
+      user: string,
+      nftIndex: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    lowURI(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    mediumURI(
-      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -598,6 +632,11 @@ export class BrainNFT extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    setBaseURI(
+      baseURI_: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
@@ -619,9 +658,13 @@ export class BrainNFT extends BaseContract {
   };
 
   populateTransaction: {
-    HIGH_THRESHOLD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    BRONZE_THRESHOLD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    MEDIUM_THRESHOLD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    GOLD_THRESHOLD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    NFT_AMOUNT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    SILVER_THRESHOLD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
       to: string,
@@ -637,7 +680,7 @@ export class BrainNFT extends BaseContract {
     bitToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claimNFT(
-      tokens: BigNumberish,
+      nftIndex: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -646,24 +689,15 @@ export class BrainNFT extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    highURI(
-      arg0: BigNumberish,
+    getOwnershipCount(
+      user: string,
+      nftIndex: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
       owner: string,
       operator: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    lowURI(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    mediumURI(
-      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -694,6 +728,11 @@ export class BrainNFT extends BaseContract {
     setApprovalForAll(
       operator: string,
       approved: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setBaseURI(
+      baseURI_: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

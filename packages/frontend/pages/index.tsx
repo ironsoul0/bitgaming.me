@@ -162,7 +162,12 @@ const IndexPage = () => {
         render: "Successfuly synced your tokens",
         type: "success",
         isLoading: false,
+        progress: 50,
       });
+      const id = setTimeout(() => {
+        toast.dismiss(toastRef.current);
+        clearTimeout(id);
+      }, 2000);
       fetchSynced();
       setCoins(0);
       localStorage.setItem("coins", "0");
@@ -172,6 +177,10 @@ const IndexPage = () => {
         type: "error",
         isLoading: false,
       });
+      const id = setTimeout(() => {
+        toast.dismiss(toastRef.current);
+        clearTimeout(id);
+      }, 2000);
     }
   }, [state, setCoins, fetchSynced]);
 
