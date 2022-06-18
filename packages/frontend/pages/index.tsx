@@ -5,6 +5,8 @@ import { Contract } from "ethers";
 import React, { useEffect, useMemo, useState } from "react";
 import { YourContract as YourContractType } from "types/typechain";
 
+import { VerticalNavigationTemplate } from "../components";
+
 const useYourContract = () => {
   const { account, library } = useEthers();
   console.log("account", account, library);
@@ -38,8 +40,16 @@ const IndexPage = () => {
   }, [contract, account]);
 
   return (
-    <>
-      <div className="max-w-lg py-4 mx-auto text-center">
+    <VerticalNavigationTemplate>
+      <div
+        style={{
+          height: 100,
+          width: "100%",
+          background: "linear-gradient(to right, #2193b0, #6dd5ed);",
+        }}
+        className="bg-gradient-to-r from-cyan-500 to-blue-500"
+      ></div>
+      <div className="py-4 mx-auto ml-10">
         {!account ? (
           <button
             className="px-4 py-3 mt-4 text-white bg-blue-500 rounded-sm"
@@ -70,7 +80,7 @@ const IndexPage = () => {
           </div>
         )}
       </div>
-    </>
+    </VerticalNavigationTemplate>
   );
 };
 
