@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import { BrainNFT } from "types/typechain";
 import { BITToken } from "types/typechain/BITToken";
 
-import { NFTCard, VerticalNavigationTemplate } from "../components";
+import { Modal, NFTCard, VerticalNavigationTemplate } from "../components";
 
 const default_avatar =
   "https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3.png";
@@ -392,6 +392,7 @@ const IndexPage = () => {
           </div>
         </div>
       </div>
+      <Modal content="Do you want to visit OpenSea?" />
     </VerticalNavigationTemplate>
   );
 };
