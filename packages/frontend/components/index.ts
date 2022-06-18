@@ -3,6 +3,7 @@ export * from "./Dashboard";
 export * from "./GameCard";
 export * from "./GameTemplate";
 export * from "./Leaderboard";
+export * from "./Modal";
 export * from "./NftCard";
 export * from "./NumberMemory";
 export * from "./ReactionGame";
