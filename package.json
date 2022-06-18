@@ -17,6 +17,7 @@
   "scripts": {
     "dev": "yarn workspace @ethereum-starter/frontend dev",
     "deploy": "yarn workspace @ethereum-starter/hardhat deploy",
+    "compile": "yarn workspace @ethereum-starter/hardhat compile",
     "chain": "yarn workspace @ethereum-starter/hardhat chain",
     "lint": "yarn workspaces run lint",
     "prepare": "husky install"
