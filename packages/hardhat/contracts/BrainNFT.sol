@@ -1,8 +1,10 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.3;
 
+import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 import "./BITToken.sol";
 
@@ -33,9 +35,9 @@ contract BrainNFT is ERC721URIStorage {
     require(nftIndex < NFT_AMOUNT, "INVALID_NFT_INDEX");
 
     uint256 tokens = BRONZE_THRESHOLD;
-    if (nftIndex > 6) {
+    if (nftIndex > 7) {
       tokens = GOLD_THRESHOLD;
-    } else if (nftIndex > 1) {
+    } else if (nftIndex > 2) {
       tokens = SILVER_THRESHOLD;
     }
     require(
@@ -44,11 +46,11 @@ contract BrainNFT is ERC721URIStorage {
     );
 
     BITToken(bitToken).burnTokens(msg.sender, tokens);
+    _tokenIds.increment();
     uint256 newItemId = _tokenIds.current();
     _mint(msg.sender, newItemId);
-    _setTokenURI(newItemId, string(abi.encodePacked(nftIndex)));
-    _tokenIds.increment();
-
+    _setTokenURI(newItemId, Strings.toString(nftIndex));
+    console.log(tokenURI(newItemId));
     ownerCounter[msg.sender][nftIndex]++;
   }
 
@@ -57,8 +59,8 @@ contract BrainNFT is ERC721URIStorage {
     view
     returns (uint256[] memory)
   {
-    uint256[] memory count = new uint256[](NFT_AMOUNT);
-    for (uint256 i = 0; i < NFT_AMOUNT; i++) {
+    uint256[] memory count = new uint256[](NFT_AMOUNT + 1);
+    for (uint256 i = 1; i <= NFT_AMOUNT; i++) {
       count[i] = ownerCounter[user][i];
     }
     return count;
@@ -72,13 +74,6 @@ contract BrainNFT is ERC721URIStorage {
   function _baseURI() internal view override returns (string memory) {
     return baseURI;
   }
-
-  function tokenURI(uint256 tokenId)
-    public
-    view
-    override
-    returns (string memory)
-  {}
 
   function setBaseURI(string memory baseURI_) external onlyOwner {
     baseURI = baseURI_;

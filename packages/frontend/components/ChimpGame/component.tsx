@@ -82,7 +82,7 @@ export const ChimpGame = () => {
 
   useEffect(() => {
     if (gameState.strikes === MAX_STRIKES) {
-      toast.success(`Wow! You got ${gameState.numbers * REWARD} BIT coins!`);
+      toast.success(`Wow! You got ${gameState.numbers * REWARD} BIT tokens!`);
       setCoins((coins: number) => {
         localStorage.setItem(
           "coins",

@@ -4,7 +4,7 @@ import { chainReadProvider } from "config";
 import { useCoinsContext } from "config/context";
 import { BITContract, NFTContract } from "config/contracts";
 import { SyncIcon } from "core";
-import { Contract, ethers, utils } from "ethers";
+import { BigNumber, Contract, ethers, utils } from "ethers";
 import React, {
   useCallback,
   useEffect,
@@ -337,9 +337,9 @@ const IndexPage = () => {
                     contentLeft={n.gen}
                     contentRight={n.supply}
                     contentMain={n.description}
-                    handleClick={() => claimCard(i)}
+                    handleClick={() => claimCard(i + 1)}
                     insufficient={synced < BRONZE_THRESHOLD}
-                    owned={!!ownershipCount[i]}
+                    owned={!!ownershipCount[i + 1]}
                   />
                 </div>
               ))}
@@ -361,9 +361,9 @@ const IndexPage = () => {
                     contentLeft={n.gen}
                     contentRight={n.supply}
                     contentMain={n.description}
-                    handleClick={() => claimCard(i + 2)}
+                    handleClick={() => claimCard(i + 3)}
                     insufficient={synced < SILVER_THRESHOLD}
-                    owned={!!ownershipCount[i + 2]}
+                    owned={!!ownershipCount[i + 3]}
                   />
                 </div>
               ))}
@@ -383,9 +383,9 @@ const IndexPage = () => {
                   contentLeft={n.gen}
                   contentRight={n.supply}
                   contentMain={n.description}
-                  handleClick={() => claimCard(i + 7)}
+                  handleClick={() => claimCard(i + 8)}
                   insufficient={synced < GOLD_THRESHOLD}
-                  owned={!!ownershipCount[i + 7]}
+                  owned={!!ownershipCount[i + 8]}
                 />
               </div>
             ))}
