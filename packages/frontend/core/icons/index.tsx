@@ -4,6 +4,23 @@ type IconProps = {
   className?: string;
 };
 
+export const CoinIcon: FC<IconProps> = ({ className }: IconProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    fill="none"
+    viewBox="0 0 20 20"
+    className={className}
+  >
+    <circle cx="10" cy="10" r="10" fill="#F7F9FD"></circle>
+    <path
+      fill="#2669F5"
+      d="M16 15L10.45 5 4.9 15H16zM6.55 9.687L9.1 5H4l2.55 4.688zm7.183 3.99H7.167L10.45 7.76l3.283 5.916z"
+    ></path>
+  </svg>
+);
+
 export const PlayIcon: FC<IconProps> = ({ className }: IconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

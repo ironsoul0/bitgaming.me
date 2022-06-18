@@ -1,22 +1,37 @@
 import { useEthers } from "@usedapp/core";
-import { ChimpIcon } from "core";
+import clsx from "clsx";
+import { useCoinsContext } from "config/context";
+import { ChimpIcon, CoinIcon } from "core";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 
 const AccountBlock: React.FC = () => {
   const { deactivate, activateBrowserWallet, account } = useEthers();
+  const { coins } = useCoinsContext();
 
   return (
-    <div className="flex items-center justify-start w-full py-4 mt-auto bg-indigo-700 mt-36 space-x-2 px-3.5">
+    <div
+      className={clsx(
+        "flex items-center justify-start w-full py-4 mt-6 rounded-lg space-x-2 px-3.5 transition-all",
+        account && "account-block"
+      )}
+      style={account ? { width: "96%" } : {}}
+    >
       {!account ? (
         <button
-          className="px-4 py-3 text-white bg-blue-500 rounded-sm"
+          className="block w-full px-4 py-4 font-bold text-center connect-account rounded-md animate-pulse-fast"
           onClick={() => activateBrowserWallet()}
         >
           Please connect account
         </button>
       ) : (
+        // <button
+        //   className="px-4 py-3 text-white bg-blue-500 rounded-sm"
+        //   onClick={() => activateBrowserWallet()}
+        // >
+        //   Please connect account
+        // </button>
         <>
           <div className="mr-2">
             <img src="https://i.ibb.co/fxrbS6p/Ellipse-2-2.png" alt="avatar" />
@@ -25,12 +40,14 @@ const AccountBlock: React.FC = () => {
             <p className="text-base text-white cursor-pointer leading-4">
               {account?.substr(0, 10).concat("...")}
             </p>
-            <p className="text-sm text-gray-400 cursor-pointer leading-3">
-              {account?.substr(0, 10).concat("...")}
-            </p>
+            <div className="flex items-center font-bold text-gray-400 cursor-pointer text-md leading-3 account-balance">
+              {/* {account?.substr(0, 10).concat("...")} */}
+              <p>{coins} BIT</p>
+              {/* <CoinIcon /> */}
+            </div>
           </div>
 
-          <div className="ml-10">
+          <div className="hidden ml-10">
             <button
               aria-label="visit"
               className="ml-8 bg-indigo-600 rounded-full focus:ring-2 focus:outline-none hover:bg-indigo-800 p-2.5"
@@ -84,7 +101,7 @@ export const VerticalNavigation: React.FC = () => {
         className="flex flex-col items-start justify-start w-full h-full transform xl:translate-x-0 ease-in-out transition duration-500 sm:w-72"
       >
         <button
-          className="flex items-center justify-start w-full px-6 pt-6 text-white focus:outline-none space-x-3"
+          className="flex items-center justify-start w-full px-4 pt-6 text-white focus:outline-none space-x-3"
           onClick={() => router.push("/")}
         >
           <svg
@@ -101,13 +118,14 @@ export const VerticalNavigation: React.FC = () => {
           </svg>
           <p className="text-2xl leading-6">BIT Gaming</p>
         </button>
-        <p className="pb-0 pl-4 mt-8 font-bold text-white">Navigation</p>
+        <AccountBlock />
+        <p className="pb-0 pl-4 mt-6 font-bold text-white">Navigation</p>
         <div className="flex flex-col items-start justify-start w-full px-4 pb-5 mt-3 space-y-3">
           <Link href="/">
             <button
               style={{
                 backgroundColor:
-                  router.pathname === "/" ? "rgb(55 65 81)" : "transparent",
+                  router.pathname === "/" ? "#202a30" : "transparent",
               }}
               className="flex items-center w-full py-3 pl-4 text-white rounded focus:outline-none jusitfy-start hover:text-white hover:bg-gray-700 space-x-6"
             >
@@ -157,7 +175,7 @@ export const VerticalNavigation: React.FC = () => {
               style={{
                 backgroundColor:
                   router.pathname === "/leaderboard"
-                    ? "rgb(55 65 81)"
+                    ? "#202a30"
                     : "transparent",
               }}
               className="flex items-center w-full py-3 pl-4 text-white rounded focus:outline-none jusitfy-start hover:text-white hover:bg-gray-700 space-x-6"
@@ -193,9 +211,7 @@ export const VerticalNavigation: React.FC = () => {
           <button
             style={{
               backgroundColor:
-                router.pathname === "/chimpTest"
-                  ? "rgb(55 65 81)"
-                  : "transparent",
+                router.pathname === "/chimpTest" ? "#202a30" : "transparent",
             }}
             className="flex items-center justify-start w-full py-3 pl-4 text-white rounded focus:outline-none hover:text-white hover:bg-gray-700"
             onClick={() => router.push("/chimpTest")}
@@ -225,11 +241,9 @@ export const VerticalNavigation: React.FC = () => {
           <button
             style={{
               backgroundColor:
-                router.pathname === "/numberMemory"
-                  ? "rgb(55 65 81)"
-                  : "transparent",
+                router.pathname === "/numberMemory" ? "#202a30" : "transparent",
             }}
-            className="flex items-center justify-start w-full py-3 pl-4 text-white rounded focus:outline-none space-x-6 hover:text-white hover:bg-gray-700"
+            className="flex items-center justify-start w-full py-3 pl-4 text-white rounded focus:outline-none space-x-6 hover:text-white hover:bg-gray-700 hover:bg-red"
           >
             <svg
               width="24"
@@ -302,14 +316,12 @@ export const VerticalNavigation: React.FC = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="text-base leading-4">Game 2</p>
+            <p className="text-base leading-4">Number Memory</p>
           </button>
           <button
             style={{
               backgroundColor:
-                router.pathname === "/reactionTime"
-                  ? "rgb(55 65 81)"
-                  : "transparent",
+                router.pathname === "/reactionTime" ? "#202a30" : "transparent",
             }}
             className="flex items-center justify-start w-full py-3 pl-4 text-white rounded focus:outline-none space-x-6 hover:text-white hover:bg-gray-700"
           >
@@ -387,7 +399,10 @@ export const VerticalNavigation: React.FC = () => {
             <p className="text-base leading-4">Game 3</p>
           </button>
         </div>
-        <AccountBlock />
+        <div className="flex items-center hidden px-6 py-4 ml-4 font-bold coin-display rounded-md animate-pulse-fast">
+          <CoinIcon className="mr-3" />
+          <p>203 BIT</p>
+        </div>
       </div>
     </>
   );

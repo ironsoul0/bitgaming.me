@@ -1,5 +1,6 @@
 import "styles/index.scss";
 import "styles/NumberMemory.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   ChainId,
@@ -8,8 +9,10 @@ import {
   MULTICALL_ADDRESSES,
 } from "@usedapp/core";
 import { readOnlyUrls } from "config";
+import { CoinsProvider } from "config/context";
 import { Multicall } from "config/contracts";
 import type { AppProps } from "next/app";
+import { ToastContainer } from "react-toastify";
 
 const config: Config = {
   readOnlyUrls: { ...readOnlyUrls },
@@ -30,7 +33,10 @@ const config: Config = {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <DAppProvider config={config}>
-      <Component {...pageProps} />
+      <CoinsProvider>
+        <ToastContainer />
+        <Component {...pageProps} />
+      </CoinsProvider>
     </DAppProvider>
   );
 }

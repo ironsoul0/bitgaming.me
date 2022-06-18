@@ -7,3 +7,17 @@
 html {
   background: #141a1e;
 }
+
+.connect-account {
+  background: linear-gradient(50deg, #784ffe -6.1%, #6d41fd 49.46%, #5f32f4 104.92%);
+  color: white;
+}
+
+.account-block:hover {
+  background-color: #202a30;
+  cursor: pointer;
+}
+
+.account-balance {
+  color: linear-gradient(50deg, #784ffe -6.1%, #6d41fd 49.46%, #5f32f4 104.92%);
+}

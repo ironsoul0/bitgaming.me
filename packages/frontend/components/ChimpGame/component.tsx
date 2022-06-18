@@ -1,8 +1,10 @@
 import { useEthers } from "@usedapp/core";
 import clsx from "clsx";
 import { VerticalNavigationTemplate } from "components/VerticalNavigationTemplate";
+import { useCoinsContext } from "config/context";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import { ChimpIcon } from "../../core";
 import { GameTemplate } from "../GameTemplate";
@@ -19,8 +21,10 @@ type PuzzleState = Record<number, number>;
 
 const CELLS = 25;
 const MAX_STRIKES = 3;
+const REWARD = 5;
 
 export const ChimpGame = () => {
+  const { setCoins } = useCoinsContext();
   const router = useRouter();
   const { account } = useEthers();
   const [activeGame, setActiveGame] = useState(false);
@@ -75,6 +79,19 @@ export const ChimpGame = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (gameState.strikes === MAX_STRIKES) {
+      toast.success(`Wow! You got ${gameState.numbers * REWARD} BIT coins!`);
+      setCoins((coins: number) => {
+        localStorage.setItem(
+          "coins",
+          (coins + gameState.numbers * REWARD).toString()
+        );
+        return coins + gameState.numbers * REWARD;
+      });
+    }
+  }, [gameState.strikes, gameState.numbers, setCoins]);
 
   const restartGame = () => {
     setTarget(1);
@@ -137,36 +154,43 @@ export const ChimpGame = () => {
           <div className="font-bold text-center text-white">
             {gameState.strikes === MAX_STRIKES ? (
               <div>
-                <h3 className="text-4xl">Чисел</h3>
-                <p className="text-5xl">{gameState.numbers}</p>
+                <ChimpIcon className="w-24 mx-auto" />
+                <h3 className="mb-2 text-4xl">Numbers: {gameState.numbers}</h3>
+                {/* <p className="mt-4 mb-5 text-5xl">{gameState.numbers}</p> */}
+                <h3 className="mb-5 text-4xl">
+                  Reward: {gameState.numbers * REWARD} BIT coins
+                </h3>
+                {/* <p className="mt-4 mb-5 text-5xl">{gameState.numbers}</p> */}
                 <div className="mx-auto">
                   <button
                     onClick={restartGame}
-                    className="px-4 py-3 mt-4 ml-3 font-bold text-black bg-yellow-300 rounded focus:outline-none"
+                    // className="px-4 py-3 mt-4 ml-3 font-bold text-black bg-yellow-300 rounded focus:outline-none"
+                    className="px-8 py-3 mt-2 font-bold text-white rounded focus:outline-none bg-purple-950 ring-purple-800 transition-all hover:ring-2"
                   >
-                    Попробовать снова
+                    Try again
                   </button>
                 </div>
                 <button
                   onClick={returnToHomePage}
-                  className="px-4 py-3 mt-4 ml-3 font-bold text-black bg-gray-200 rounded focus:outline-none"
+                  className="px-4 py-3 mt-4 font-bold text-black bg-gray-200 rounded focus:outline-none hover:ring-2 ring-gray-300 transition-all"
                 >
-                  Вернуться в меню
+                  Back to Main page
                 </button>
               </div>
             ) : (
               <div>
-                <h3 className="text-4xl">Чисел</h3>
-                <p className="text-5xl">{gameState.numbers}</p>
-                <h4 className="mt-4 text-3xl font-semibold">Штраф</h4>
-                <h4 className="text-3xl">
-                  {gameState.strikes} из {MAX_STRIKES}
+                <h3 className="text-4xl">Numbers</h3>
+                <p className="mt-4 text-5xl">{gameState.numbers}</p>
+                <h4 className="mt-8 text-3xl font-semibold">Strikes</h4>
+                <h4 className="mb-8 text-3xl">
+                  {gameState.strikes} out of {MAX_STRIKES}
                 </h4>
                 <button
                   onClick={continueGame}
-                  className="px-4 py-3 mt-4 font-bold text-black bg-yellow-300 rounded focus:outline-none"
+                  // className="px-4 py-3 mt-4 font-bold text-black rounded focus:outline-none"
+                  className="px-8 py-3 mt-2 font-bold text-white rounded focus:outline-none bg-purple-950 ring-purple-800 transition-all hover:ring-2"
                 >
-                  Продолжить
+                  Continue
                 </button>
               </div>
             )}

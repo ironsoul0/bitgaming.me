@@ -10,6 +10,9 @@ module.exports = {
         purple: {
           950: "#784ffe",
         },
+        gray: {
+          750: "#202a30",
+        },
       },
       keyframes: {
         appear: {
@@ -31,7 +34,7 @@ module.exports = {
         sans: ["Mulish", ...defaultTheme.fontFamily.sans],
       },
       animation: {
-        "pulse-fast": "pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "pulse-fast": "pulse 6.5s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "smooth-appear": "appear 0.5s cubic-bezier(0.4, 0, 0.6, 1) forwards",
         "fade-in-down": "fade-in-down 0.5s ease-out",
       },

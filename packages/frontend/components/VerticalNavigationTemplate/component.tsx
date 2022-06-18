@@ -11,7 +11,12 @@ export const VerticalNavigationTemplate: React.FC = ({ children }: any) => {
       <div>
         <VerticalNavigation />
       </div>
-      <div className="flex-1">{children}</div>
+      <div
+        className="flex-1 pl-2"
+        style={{ borderLeftColor: "#2c3a43", borderLeftWidth: 1 }}
+      >
+        {children}
+      </div>
     </div>
   );
 };
