@@ -95,12 +95,17 @@ const LeaderboardPage = () => {
         <div className="mt-8 ml-4">
           {leaderboard && (
             <div>
-              <div className="mx-2">
-                <p className="text-4xl font-bold text-white">Leaderboard</p>
-                <p className="mb-10 text-xl text-white opacity-80">
-                  All participants sorted by on-chain BIT tokens
-                </p>
+              <div className="flex items-center mb-10">
+                <img alt="icon" src="/cup.svg" />
+
+                <div className="ml-4">
+                  <p className="text-3xl font-bold text-white">Leaderboard</p>
+                  <p className="text-lg text-white opacity-80">
+                    All participants sorted by on-chain BIT tokens
+                  </p>
+                </div>
               </div>
+
               <div className="animate-smooth-appear">
                 {leaderboard.length > 0 ? (
                   leaderboard.map((user, index) => (

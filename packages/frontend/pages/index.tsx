@@ -20,6 +20,85 @@ import { NFTCard, VerticalNavigationTemplate } from "../components";
 const default_avatar =
   "https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3.png";
 
+const bronzeNFT = [
+  {
+    image: "https://ironsoul0.github.io/bronze/brain1.png",
+    name: "Smally brain",
+    description: "The brains of crypto beginners.",
+    requiredScore: "Requires 500 on-chain BIT",
+    gen: "gen 1 - 1",
+    supply: "supply: 12323",
+  },
+  {
+    image: "https://ironsoul0.github.io/bronze/brain2.png",
+    name: "Mini brain",
+    description: "Another type of brains of crypto beginners.",
+    requiredScore: "Requires 900 on-chain BIT",
+    gen: "gen 1 - 2",
+    supply: "supply: 21321",
+  },
+];
+const silverNFT = [
+  {
+    image: "https://ironsoul0.github.io/silver/brain1.png",
+    name: "Miner's brain",
+    description: "The brain of average mining enjoyer.",
+    requiredScore: "Requires 1000 on-chain BIT",
+    gen: "gen 2 - 1",
+    supply: "supply: 423",
+  },
+  {
+    image: "https://ironsoul0.github.io/silver/brain2.png",
+    name: "Average brain",
+    description: "The brain of experienced crypto dog.",
+    requiredScore: "Requires 1200 on-chain BIT",
+    gen: "gen 2 - 2",
+    supply: "supply: 321",
+  },
+  {
+    image: "https://ironsoul0.github.io/silver/brain3.png",
+    name: "Axis brain",
+    description: "The geek brains of the geek personality.",
+    requiredScore: "Requires 1200 on-chain BIT",
+    gen: "gen 2 - 3",
+    supply: "supply: 453",
+  },
+  {
+    image: "https://ironsoul0.github.io/silver/brain4.png",
+    name: "Middly brain",
+    description: "The brain of average mining enjoyer.",
+    requiredScore: "Requires 1400 on-chain BIT",
+    gen: "gen 2 - 4",
+    supply: "supply: 233",
+  },
+  {
+    image: "https://ironsoul0.github.io/silver/brain5.png",
+    name: "Minted brain",
+    description: "The brain that undergo minting.",
+    requiredScore: "Requires 1500 on-chain BIT",
+    gen: "gen 2 - 5",
+    supply: "supply: 195",
+  },
+];
+const goldNFT = [
+  {
+    image: "https://ironsoul0.github.io/gold/brain1.gif",
+    name: "Geek brain",
+    description: "The brain of the real geek.",
+    requiredScore: "Requires 1800 on-chain BIT",
+    gen: "gen 5 - 1",
+    supply: "supply: 23",
+  },
+  {
+    image: "https://ironsoul0.github.io/gold/brain2.gif",
+    name: "Jet brain",
+    description: "The brain of the real jet man.",
+    requiredScore: "Requires 2000 on-chain BIT",
+    gen: "gen 5 - 2",
+    supply: "supply: 10",
+  },
+];
+
 export const useBitContract = () => {
   const { account, library } = useEthers();
 
@@ -101,18 +180,15 @@ const IndexPage = () => {
       <div className="py-4 mx-auto mt-4 ml-4">
         <div>
           <div className="flex items-center mb-5">
-            <div
-              className="w-10 h-10 bg-gray-300 rounded-full"
-              style={{
-                backgroundImage: "url(" + default_avatar + ")",
-                backgroundSize: "cover",
-              }}
-            />
-            <p className="ml-4 text-2xl font-bold text-white font-500">
-              Rewards
-            </p>
+            <img alt="icon" src="/reward.svg" />
+            <div className="ml-4">
+              <p className="text-3xl font-bold text-white">Rewards</p>
+              <p className="text-lg text-white opacity-80">
+                All participants sorted by on-chain BIT tokens
+              </p>
+            </div>
           </div>
-          <div className="flex">
+          <div className="flex animate-smooth-appear">
             <div className="px-4 py-3 bg-gray-750 rounded-2xl">
               <p className="text-sm text-gray-300 bg-gray-750">
                 Synced on-chain
@@ -157,31 +233,55 @@ const IndexPage = () => {
             </div>
           </div>
 
-          <div className="mt-5 grid grid-cols-12 gap-4">
-            <div className="col-span-6">
-              <NFTCard
-                imageUrl={default_avatar}
-                name="Zaphrodite"
-                desc="Requires 1,000 BIT"
-                contentLeft="GEN 2 - 1"
-                contentRight="supply: 10718"
-                contentMain="Zaphrodite is the daughter of Zapeus, and thereforeghter of Zapeus, and thereforeghter of Zapeus, and therefore"
-                handleClick={() => console.log("hi 1")}
-                handleSecondClick={() => console.log("hi 2")}
-              />
-            </div>
-            <div className="col-span-6">
-              <NFTCard
-                imageUrl={default_avatar}
-                name="Zaphrodite"
-                desc="Requires 1,000 BIT"
-                contentLeft="GEN 2 - 1"
-                contentRight="supply: 10718"
-                contentMain="Zaphrodite is the daughter of Zapeus, and thereforeghter of Zapeus, and thereforeghter of Zapeus, and therefore"
-                handleClick={() => console.log("hi 1")}
-                handleSecondClick={() => console.log("hi 2")}
-              />
-            </div>
+          <p className="mt-8 text-2xl font-bold text-red-400">Bronze NFTs</p>
+          <div className="mt-4 grid grid-cols-12 gap-4 animate-smooth-appear">
+            {bronzeNFT.map((n) => (
+              <div key={n.image} className="col-span-6">
+                <NFTCard
+                  imageUrl={n.image}
+                  name={n.name}
+                  desc={n.requiredScore}
+                  contentLeft={n.gen}
+                  contentRight={n.supply}
+                  contentMain={n.description}
+                  handleClick={() => console.log("hi 1")}
+                />
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-8 text-2xl font-bold text-gray-300">Silver NFTs</p>
+          <div className="mt-4 grid grid-cols-12 gap-x-4 gap-y-8 animate-smooth-appear">
+            {silverNFT.map((n) => (
+              <div key={n.image} className="col-span-6">
+                <NFTCard
+                  imageUrl={n.image}
+                  name={n.name}
+                  desc={n.requiredScore}
+                  contentLeft={n.gen}
+                  contentRight={n.supply}
+                  contentMain={n.description}
+                  handleClick={() => console.log("hi 1")}
+                />
+              </div>
+            ))}
+          </div>
+
+          <p className="mt-8 text-2xl font-bold text-yellow-500">Gold NFTs</p>
+          <div className="mt-4 grid grid-cols-12 gap-4 animate-smooth-appear">
+            {goldNFT.map((n) => (
+              <div key={n.image} className="col-span-6">
+                <NFTCard
+                  imageUrl={n.image}
+                  name={n.name}
+                  desc={n.requiredScore}
+                  contentLeft={n.gen}
+                  contentRight={n.supply}
+                  contentMain={n.description}
+                  handleClick={() => console.log("hi 1")}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
