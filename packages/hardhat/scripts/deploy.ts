@@ -26,13 +26,16 @@ async function main() {
   }
 
   const BITToken = await ethers.getContractFactory("BITToken");
-  const tokenContract = await BITToken.deploy(ethers.utils.parseEther("100"));
+  const tokenContract = await BITToken.deploy(ethers.utils.parseEther("1"));
   await tokenContract.deployed();
   console.log("BITToken contract deployed to:", tokenContract.address);
 
   const rewardTokens = rewardAccounts.map(() =>
     ethers.utils.parseEther(Math.floor(Math.random() * 30 + 1).toString())
   );
+  for (let i = 0; i < rewardTokens.length; i++) {
+    console.log(ethers.utils.formatEther(rewardTokens[i]));
+  }
   console.log(rewardAccounts, rewardTokens);
   await tokenContract.rewardTokens(rewardAccounts, rewardTokens);
 
