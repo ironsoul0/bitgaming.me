@@ -1,5 +1,6 @@
 import { useEthers } from "@usedapp/core";
 import clsx from "clsx";
+import { isValidChain } from "config";
 import { useCoinsContext } from "config/context";
 import { ChimpIcon, CoinIcon, NumberMemoryIcon, ReactionIcon } from "core";
 import Link from "next/link";
@@ -7,8 +8,87 @@ import { useRouter } from "next/router";
 import React from "react";
 
 const AccountBlock: React.FC = () => {
-  const { deactivate, activateBrowserWallet, account } = useEthers();
+  const { deactivate, activateBrowserWallet, account, chainId } = useEthers();
   const { coins } = useCoinsContext();
+
+  let content = (
+    <button
+      className="block w-full px-4 py-4 font-bold text-center connect-account rounded-md animate-pulse-fast"
+      onClick={() => activateBrowserWallet()}
+    >
+      Please connect account
+    </button>
+  );
+
+  if (account && chainId && !isValidChain(chainId)) {
+    content = (
+      <div className="w-full px-6 py-4 font-bold text-white bg-red-500 rounded-md">
+        <p>Wrong chain!</p>
+        <p>Please connect to Rinkeby.</p>
+      </div>
+    );
+  } else if (account) {
+    content = (
+      <>
+        <div className="mr-2">
+          <img src="https://i.ibb.co/fxrbS6p/Ellipse-2-2.png" alt="avatar" />
+        </div>
+        <div className="flex flex-col items-start justify-start mr-16 space-y-2">
+          <a
+            target="_blank"
+            className="text-base text-white cursor-pointer leading-4"
+            href={`${process.env.NEXT_PUBLIC_ETHERSCAN}/${account}`}
+            rel="noreferrer"
+          >
+            {account?.substr(0, 10).concat("...")}
+          </a>
+          <div className="flex items-center font-bold text-gray-400 cursor-pointer text-md leading-3 account-balance">
+            {/* {account?.substr(0, 10).concat("...")} */}
+            <p>{coins} BIT</p>
+            {/* <CoinIcon /> */}
+          </div>
+        </div>
+
+        <div className="ml-10">
+          <button
+            aria-label="visit"
+            className="ml-8 bg-indigo-600 rounded-full focus:ring-2 focus:outline-none p-2.5 opacity-70"
+            onClick={() => deactivate()}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M4.16666 10H15.8333"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M10.8333 15L15.8333 10"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M10.8333 5L15.8333 10"
+                stroke="white"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </>
+    );
+  }
 
   return (
     <div
@@ -16,81 +96,11 @@ const AccountBlock: React.FC = () => {
         "flex items-center justify-start w-full py-4 mt-6 rounded-lg space-x-2 px-3.5 transition-all",
         account && "account-block"
       )}
-      style={account ? { width: "96%" } : {}}
+      style={
+        account && chainId && isValidChain(chainId) ? { width: "96%" } : {}
+      }
     >
-      {!account ? (
-        <button
-          className="block w-full px-4 py-4 font-bold text-center connect-account rounded-md animate-pulse-fast"
-          onClick={() => activateBrowserWallet()}
-        >
-          Please connect account
-        </button>
-      ) : (
-        // <button
-        //   className="px-4 py-3 text-white bg-blue-500 rounded-sm"
-        //   onClick={() => activateBrowserWallet()}
-        // >
-        //   Please connect account
-        // </button>
-        <>
-          <div className="mr-2">
-            <img src="https://i.ibb.co/fxrbS6p/Ellipse-2-2.png" alt="avatar" />
-          </div>
-          <div className="flex flex-col items-start justify-start mr-16 space-y-2">
-            <a
-              target="_blank"
-              className="text-base text-white cursor-pointer leading-4"
-              href={`${process.env.NEXT_PUBLIC_ETHERSCAN}/${account}`}
-              rel="noreferrer"
-            >
-              {account?.substr(0, 10).concat("...")}
-            </a>
-            <div className="flex items-center font-bold text-gray-400 cursor-pointer text-md leading-3 account-balance">
-              {/* {account?.substr(0, 10).concat("...")} */}
-              <p>{coins} BIT</p>
-              {/* <CoinIcon /> */}
-            </div>
-          </div>
-
-          <div className="ml-10">
-            <button
-              aria-label="visit"
-              className="ml-8 bg-indigo-600 rounded-full focus:ring-2 focus:outline-none p-2.5 opacity-70"
-              onClick={() => deactivate()}
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M4.16666 10H15.8333"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M10.8333 15L15.8333 10"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M10.8333 5L15.8333 10"
-                  stroke="white"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </div>
-        </>
-      )}
+      {content}
     </div>
   );
 };

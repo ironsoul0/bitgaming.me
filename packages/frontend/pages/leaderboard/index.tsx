@@ -192,7 +192,7 @@ const LeaderboardPage = () => {
                 </div>
               </div>
 
-              {participants.length && (
+              {participants.length > 0 && (
                 <div className="animate-smooth-appear">
                   {participants.map((user, index) => (
                     <UserRow
