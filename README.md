@@ -28,8 +28,8 @@ Our core smart contracts are verified on Rinkeby testnet.
 
 | Contract                                  | Link                                  |
 | ---------------------------------------- | -------------------------------------------- |
-| [`BIT ERC20 Token`](https://rinkeby.etherscan.io/address/0x2C04c3Faf3040eA42A6887eC230Cf0a397eb28a2#code) | [0x2C04c3Faf3040eA42A6887eC230Cf0a397eb28a2](https://rinkeby.etherscan.io/address/0x2C04c3Faf3040eA42A6887eC230Cf0a397eb28a2#code) |
-| [`Brain ERC721 NFT`](https://rinkeby.etherscan.io/address/0xB94DDe6743f073de10943665302b3493e464aa02#code)     | [0xB94DDe6743f073de10943665302b3493e464aa02](https://rinkeby.etherscan.io/address/0xB94DDe6743f073de10943665302b3493e464aa02#code) |
+| `BIT ERC20 Token` | [0x2C04c3Faf3040eA42A6887eC230Cf0a397eb28a2](https://rinkeby.etherscan.io/address/0x2C04c3Faf3040eA42A6887eC230Cf0a397eb28a2#code) |
+| `Brain ERC721 NFT` | [0xB94DDe6743f073de10943665302b3493e464aa02](https://rinkeby.etherscan.io/address/0xB94DDe6743f073de10943665302b3493e464aa02#code) |
 
 ## Setup
 
