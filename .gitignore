@@ -2,8 +2,9 @@
 node_modules/
 
 # logs
-logs
+logs/
 *.log
 yarn-error.log*
 
 .DS_Store
+.DS_Store*
