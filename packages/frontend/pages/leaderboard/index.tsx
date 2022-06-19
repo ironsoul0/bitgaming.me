@@ -1,4 +1,3 @@
-import { useEthers } from "@usedapp/core";
 import clsx from "clsx";
 import { chainReadProvider } from "config";
 import { BITContract } from "config/contracts";
