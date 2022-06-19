@@ -5,12 +5,12 @@ import { ChainIDUrl, TARGET_CHAIN } from "config";
 
 const bitTokenAddresses: ChainIDUrl = {
   [ChainId.Hardhat]: "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318",
-  [ChainId.Rinkeby]: "0xb4edE894Fb37cAb3a20858CBdA1CA438d9790A4e",
+  [ChainId.Rinkeby]: "0xC2811f398eDD75a04cDCA9C0071F896EDC57e3CE",
 };
 
 const nftTokenAddresses: ChainIDUrl = {
   [ChainId.Hardhat]: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
-  [ChainId.Rinkeby]: "0x5d96b6c3Ef16e118F0cbe9dddD3A408798342233",
+  [ChainId.Rinkeby]: "0x01487DA7429C891eFC5a1A9903a38FE42847618d",
 };
 
 export const BITContract = {
