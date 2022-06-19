@@ -1,51 +1,88 @@
+import clsx from "clsx";
 import React from "react";
 
 type Props = {
   content: string;
   handleClick?: () => void;
+  showModal: boolean;
+  setShowModal: (x: boolean) => void;
 };
 
-export const Modal: React.FC<Props> = ({ content, handleClick }) => {
-  const [showModal, setShowModal] = React.useState(false);
+export const Modal: React.FC<Props> = ({
+  content,
+  handleClick,
+  showModal,
+  setShowModal,
+}) => {
   return (
-    <>
-      <button
-        className="px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase bg-pink-500 rounded shadow outline-none active:bg-pink-600 hover:shadow-lg focus:outline-none ease-linear transition-all duration-150"
-        type="button"
-        onClick={() => setShowModal(true)}
+    <div
+      className={clsx(
+        "flex items-center justify-center h-screen bg-gray-200 modal-body absolute",
+        showModal && "modal-active"
+      )}
+    >
+      {/* <button className="px-4 py-2 font-bold text-gray-500 bg-transparent border border-gray-500 rounded-full modal-open hover:border-indigo-500 hover:text-indigo-500">
+        Open Modal
+      </button> */}
+
+      <div
+        className={clsx(
+          "fixed top-0 left-0 flex items-center justify-center w-full h-full modal",
+          !showModal && "opacity-0 pointer-events-none"
+        )}
       >
-        Open regular modal
-      </button>
-      {showModal ? (
-        <>
-          <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
-            <div className="relative w-auto max-w-3xl mx-auto my-6">
-              <div className="relative flex flex-col w-full bg-gray-700 border-0 rounded-lg shadow-lg outline-none focus:outline-none">
-                <div className="relative flex-auto p-6">
-                  <p className="text-lg leading-relaxed text-white">
-                    {content}
-                  </p>
-                </div>
-                <div className="flex items-center justify-between px-6 pb-6 rounded-b border-slate-200">
-                  <button
-                    onClick={handleClick}
-                    className="px-4 py-3 mt-2 font-bold text-white rounded focus:outline-none bg-purple-950 ring-purple-800 transition-all hover:ring-2"
-                  >
-                    Go to OpenSea
-                  </button>
-                  <button
-                    className="px-4 py-3 mt-2 font-bold text-white bg-red-400 rounded focus:outline-none ring-purple-800 transition-all hover:ring-2"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
+        <div
+          className="absolute w-full h-full bg-gray-900 opacity-50 modal-overlay"
+          onClick={() => setShowModal(false)}
+        ></div>
+
+        <div className="z-50 w-11/12 mx-auto overflow-y-auto bg-white rounded shadow-lg modal-container md:max-w-lg">
+          {/* <div className="absolute top-0 right-0 z-50 flex flex-col items-center mt-4 mr-4 text-sm text-white cursor-pointer modal-close">
+            <svg
+              className="text-white fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+            >
+              <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+            </svg>
+            <span className="text-sm">(Esc)</span>
+          </div> */}
+
+          <div className="px-6 py-4 text-left modal-content">
+            <div className="flex items-center justify-between pb-3">
+              <p className="text-2xl font-bold">Congratulations!</p>
+              {/* <div className="z-50 cursor-pointer modal-close">
+                <svg
+                  className="text-black fill-current"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 18 18"
+                >
+                  <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                </svg>
+              </div> */}
+            </div>
+
+            <p>You are now a part of our Brain DAO!</p>
+            <p>You can checkout your new exclusive NFT on OpenSea.</p>
+
+            <div className="flex justify-end pt-2">
+              <button className="p-3 px-4 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400">
+                Opensea
+              </button>
+              <button
+                className="p-3 px-4 text-white bg-indigo-500 rounded-lg modal-close hover:bg-indigo-400"
+                onClick={() => setShowModal(false)}
+              >
+                Close
+              </button>
             </div>
           </div>
-          <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
-        </>
-      ) : null}
-    </>
+        </div>
+      </div>
+    </div>
   );
 };

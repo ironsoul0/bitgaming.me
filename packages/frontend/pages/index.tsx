@@ -5,6 +5,7 @@ import { useCoinsContext } from "config/context";
 import { BITContract, NFTContract } from "config/contracts";
 import { SyncIcon } from "core";
 import { BigNumber, Contract, ethers, utils } from "ethers";
+import { useWindowSize } from "hooks";
 import React, {
   useCallback,
   useEffect,
@@ -12,6 +13,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import Confetti from "react-confetti";
 import { toast } from "react-toastify";
 import { BrainNFT } from "types/typechain";
 import { BITToken } from "types/typechain/BITToken";
@@ -21,9 +23,9 @@ import { Modal, NFTCard, VerticalNavigationTemplate } from "../components";
 const default_avatar =
   "https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3.png";
 
-const BRONZE_THRESHOLD = 10;
-const SILVER_THRESHOLD = 20;
-const GOLD_THRESHOLD = 30;
+const BRONZE_THRESHOLD = 50;
+const SILVER_THRESHOLD = 300;
+const GOLD_THRESHOLD = 500;
 
 const bronzeNFT = [
   {
@@ -137,6 +139,7 @@ export const useNFTContract = () => {
 };
 
 const IndexPage = () => {
+  const { width, height } = useWindowSize();
   const toastRef = useRef<any>(null);
   const { account } = useEthers();
   const etherBalance = useEtherBalance(account);
@@ -159,6 +162,7 @@ const IndexPage = () => {
       transactionName: "claimNFT",
     }
   );
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const init = utils.parseEther("100");
@@ -201,6 +205,7 @@ const IndexPage = () => {
   }, [account, fetchSynced, fetchOwnership]);
 
   useEffect(() => {
+    console.log("state", state);
     if (state.status === "Mining") {
       toastRef.current = toast.loading("Mining your transaction..");
     } else if (state.status === "Success") {
@@ -219,7 +224,7 @@ const IndexPage = () => {
       fetchSynced();
       setCoins(0);
       localStorage.setItem("coins", "0");
-    } else if (state.status === "Exception" || state.status === "Fail") {
+    } else if (state.status === "Fail") {
       toast.update(toastRef.current, {
         render: "Failed to sync tokens",
         type: "error",
@@ -230,6 +235,8 @@ const IndexPage = () => {
         toast.dismiss(toastRef.current);
         clearTimeout(id);
       }, 2000);
+    } else if (state.status === "Exception") {
+      toast.error("Something is wrong.. Please check your connection.");
     }
   }, [state, setCoins, fetchSynced]);
 
@@ -251,6 +258,8 @@ const IndexPage = () => {
 
       fetchOwnership();
       fetchSynced();
+      setShowModal(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else if (nftState.status === "Exception" || nftState.status === "Fail") {
       toast.update(toastRef.current, {
         render: "Failed to mint NFT",
@@ -311,8 +320,9 @@ const IndexPage = () => {
                 </div>
                 <button
                   className={clsx(
-                    "px-3 py-2 mt-2 ml-5 font-bold text-white rounded focus:outline-none bg-purple-950 ring-purple-920 transition-all hover:ring-2",
-                    coins === 0 && "cursor-not-allowed ring-0"
+                    "px-3 py-2 mt-2 ml-5 font-bold text-white bg-purple-950 ring-purple-920 rounded focus:outline-none transition-all",
+                    coins === 0 && "cursor-not-allowed ring-0 opacity-50",
+                    coins > 0 && "hover:ring-2"
                   )}
                   onClick={claimCoins}
                   disabled={coins === 0}
@@ -392,7 +402,13 @@ const IndexPage = () => {
           </div>
         </div>
       </div>
-      <Modal content="Do you want to visit OpenSea?" />
+      <Modal
+        content="Do you want to visit OpenSea?"
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
+      <button onClick={() => setShowModal((c) => !c)}>Click</button>
+      {showModal && <Confetti width={width} height={height} />}
     </VerticalNavigationTemplate>
   );
 };

@@ -11,12 +11,12 @@ const myContractAddresses: ChainIDUrl = {
 };
 
 const bitTokenAddresses: ChainIDUrl = {
-  [ChainId.Hardhat]: "0x51A1ceB83B83F1985a81C295d1fF28Afef186E02",
+  [ChainId.Hardhat]: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
   [ChainId.Ropsten]: "0xB394202a75BB251DC3CC45FbD324C44c233FE3F4",
 };
 
 const nftTokenAddresses: ChainIDUrl = {
-  [ChainId.Hardhat]: "0x36b58F5C1969B7b6591D752ea6F5486D069010AB",
+  [ChainId.Hardhat]: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
   [ChainId.Ropsten]: "0xB394202a75BB251DC3CC45FbD324C44c233FE3F4",
 };
 

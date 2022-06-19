@@ -29,3 +29,12 @@ html {
 .gold {
   background: linear-gradient(258.51deg, #ffb600 4.55%, #eed08a);
 }
+
+.modal {
+  transition: opacity 0.25s ease;
+}
+
+.modal-active {
+  overflow-x: hidden;
+  overflow-y: visible !important;
+}
