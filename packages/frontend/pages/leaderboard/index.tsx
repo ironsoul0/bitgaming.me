@@ -1,5 +1,10 @@
+import { useEthers } from "@usedapp/core";
 import clsx from "clsx";
-import React from "react";
+import { chainReadProvider } from "config";
+import { BITContract } from "config/contracts";
+import { Contract, utils } from "ethers";
+import React, { useEffect, useMemo, useState } from "react";
+import { BITToken } from "types/typechain/BITToken";
 
 import { VerticalNavigationTemplate } from "../../components";
 
@@ -38,43 +43,43 @@ const leaderboard = [
 
 const users = [
   {
-    name: "Alibek.eth",
+    name: "alibek.eth",
     avatar: "/av1.png",
   },
   {
-    name: "Rauan.eth",
+    name: "rauan.eth",
     avatar: "/av2.png",
   },
   {
-    name: "Ulan.eth",
+    name: "ulan.eth",
     avatar: "/av3.png",
   },
   {
-    name: "Sanzhar.eth",
+    name: "sanzhar.eth",
     avatar: "/av4.png",
   },
   {
-    name: "Temirzhan.eth",
+    name: "temirzhan.eth",
     avatar: "/av5.png",
   },
   {
-    name: "Akezhan.eth",
+    name: "akezhan.eth",
     avatar: "/av6.png",
   },
   {
-    name: "Khafiz.eth",
+    name: "khafiz.eth",
     avatar: "/av7.png",
   },
   {
-    name: "Daulet.eth",
+    name: "daulet.eth",
     avatar: "/av8.png",
   },
   {
-    name: "Khafiz.eth",
+    name: "khafiz.eth",
     avatar: "/av7.png",
   },
   {
-    name: "Daulet.eth",
+    name: "daulet.eth",
     avatar: "/av8.png",
   },
 ];
@@ -121,7 +126,7 @@ const UserRow: React.FC<any> = ({
             style={{ borderColor: "#784FFE", color: "#E7DFFF" }}
             className="flex items-center justify-center w-32 h-6 py-1 py-4 ml-32 text-xs font-bold border-2 rounded-md"
           >
-            {score?.toFixed(1)}
+            {score}
           </p>
         </div>
       </div>
@@ -129,7 +134,46 @@ const UserRow: React.FC<any> = ({
   );
 };
 
+export const useBitContract = () => {
+  const { account, library } = useEthers();
+
+  const contract = useMemo(
+    () =>
+      new Contract(
+        BITContract.address,
+        BITContract.abi,
+        account ? library?.getSigner() : chainReadProvider
+      ),
+    [account, library]
+  ) as BITToken;
+
+  return contract;
+};
+
 const LeaderboardPage = () => {
+  const contract = useBitContract();
+  const [participants, setParticipants] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      if (!contract) return;
+      const data = await contract.getUsers();
+      data.sort((x, y) => {
+        if (x.balance.lt(y.balance)) return -1;
+        return 1;
+      });
+      console.log("data", data.slice(0, 10));
+      setParticipants(
+        data.slice(0, 10).map((x) => ({
+          address: x.addr,
+          score: utils.formatEther(x.balance),
+        }))
+      );
+    };
+
+    fetchLeaderboard();
+  }, [contract]);
+
   return (
     <>
       <VerticalNavigationTemplate>
@@ -149,7 +193,7 @@ const LeaderboardPage = () => {
 
               <div className="animate-smooth-appear">
                 {leaderboard.length > 0 ? (
-                  [...leaderboard, ...leaderboard].map((user, index) => (
+                  participants.map((user, index) => (
                     <UserRow
                       key={user.id}
                       name={users[index].name}

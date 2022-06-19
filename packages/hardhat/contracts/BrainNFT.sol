@@ -32,7 +32,7 @@ contract BrainNFT is ERC721URIStorage {
 
   function claimNFT(uint256 nftIndex) external {
     require(BITToken(bitToken).burner() == address(this), "NO_ACCESS");
-    require(nftIndex < NFT_AMOUNT, "INVALID_NFT_INDEX");
+    require(nftIndex >= 1 && nftIndex <= NFT_AMOUNT, "INVALID_NFT_INDEX");
 
     uint256 tokens = BRONZE_THRESHOLD;
     if (nftIndex > 7) {

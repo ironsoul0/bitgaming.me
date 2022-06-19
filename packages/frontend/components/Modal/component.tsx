@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { NFTContract } from "config/contracts";
 import React from "react";
 
 type Props = {
@@ -6,6 +7,7 @@ type Props = {
   handleClick?: () => void;
   showModal: boolean;
   setShowModal: (x: boolean) => void;
+  mintedToken: number;
 };
 
 export const Modal: React.FC<Props> = ({
@@ -13,6 +15,7 @@ export const Modal: React.FC<Props> = ({
   handleClick,
   showModal,
   setShowModal,
+  mintedToken,
 }) => {
   return (
     <div
@@ -70,9 +73,14 @@ export const Modal: React.FC<Props> = ({
             <p>You can checkout your new exclusive NFT on OpenSea.</p>
 
             <div className="flex justify-end pt-2">
-              <button className="p-3 px-4 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400">
+              <a
+                className="p-3 px-4 mr-2 text-indigo-500 bg-transparent rounded-lg hover:bg-gray-100 hover:text-indigo-400"
+                href={`${process.env.NEXT_PUBLIC_OPENSEA}/${NFTContract.address}/${mintedToken}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 Opensea
-              </button>
+              </a>
               <button
                 className="p-3 px-4 text-white bg-indigo-500 rounded-lg modal-close hover:bg-indigo-400"
                 onClick={() => setShowModal(false)}

@@ -5,6 +5,7 @@ import { useCoinsContext } from "config/context";
 import { BITContract, NFTContract } from "config/contracts";
 import { SyncIcon } from "core";
 import { BigNumber, Contract, ethers, utils } from "ethers";
+import { LogDescription } from "ethers/lib/utils";
 import { useWindowSize } from "hooks";
 import React, {
   useCallback,
@@ -163,6 +164,7 @@ const IndexPage = () => {
     }
   );
   const [showModal, setShowModal] = useState(false);
+  const [mintedToken, setMintedToken] = useState(0);
 
   useEffect(() => {
     const init = utils.parseEther("100");
@@ -255,6 +257,12 @@ const IndexPage = () => {
         toast.dismiss(toastRef.current);
         clearTimeout(id);
       }, 2000);
+
+      const events = (nftState.receipt as any).events as LogDescription[];
+      if (events && events.length) {
+        const tokenId = events[1].args.tokenId;
+        setMintedToken(tokenId);
+      }
 
       fetchOwnership();
       fetchSynced();
@@ -406,6 +414,7 @@ const IndexPage = () => {
         content="Do you want to visit OpenSea?"
         showModal={showModal}
         setShowModal={setShowModal}
+        mintedToken={mintedToken}
       />
       <button onClick={() => setShowModal((c) => !c)}>Click</button>
       {showModal && <Confetti width={width} height={height} />}
