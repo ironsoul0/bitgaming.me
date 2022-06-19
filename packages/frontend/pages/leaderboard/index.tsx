@@ -136,16 +136,9 @@ const UserRow: React.FC<any> = ({
 };
 
 export const useBitContract = () => {
-  const { account, library } = useEthers();
-
   const contract = useMemo(
-    () =>
-      new Contract(
-        BITContract.address,
-        BITContract.abi,
-        account ? library?.getSigner() : chainReadProvider
-      ),
-    [account, library]
+    () => new Contract(BITContract.address, BITContract.abi, chainReadProvider),
+    []
   ) as BITToken;
 
   return contract;
