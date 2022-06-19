@@ -1,3 +1,4 @@
+import { useEthers } from "@usedapp/core";
 import clsx from "clsx";
 import { chainReadProvider } from "config";
 import { BITContract } from "config/contracts";
@@ -92,11 +93,12 @@ const UserRow: React.FC<any> = ({
   className,
   index,
 }: any) => {
+  const { account } = useEthers();
   const default_avatar =
     "https://pwco.com.sg/wp-content/uploads/2020/05/Generic-Profile-Placeholder-v3.png";
 
   return (
-    <div className={clsx(["flex h-10 mx-2 justify-between", className])}>
+    <div className={clsx(["flex py-3 mx-2 justify-between mb-2", className])}>
       <div className="flex flex-col items-start justify-center">
         <div className="flex items-center">
           <div>
@@ -114,17 +116,23 @@ const UserRow: React.FC<any> = ({
               }}
             />
           </div>
-          <div className="ml-6 w-28">
-            <p className="flex flex-col text-white truncate align-middle text-md font-regular">
+          <div className="ml-6 w-36">
+            <p className="flex flex-col hidden text-xl text-white truncate align-middle font-regular">
               {name}
             </p>
-            <p className="flex flex-col text-sm text-gray-400 truncate align-middle font-regular">
+            <a
+              className="flex flex-col text-gray-400 truncate align-middle text-md font-regular"
+              href={`${process.env.NEXT_PUBLIC_ETHERSCAN}/${address}`}
+              target="_blank"
+              rel="noreferrer"
+            >
               {address.substr(0, 10).concat("...")}
-            </p>
+              {address === account ? " (you)" : ""}
+            </a>
           </div>
           <p
             style={{ borderColor: "#784FFE", color: "#E7DFFF" }}
-            className="flex items-center justify-center w-32 h-6 py-1 py-4 ml-32 text-xs font-bold border-2 rounded-md"
+            className="flex items-center justify-center w-32 h-6 py-1 py-4 ml-24 text-xs font-bold border-2 rounded-md"
           >
             {score}
           </p>
@@ -194,7 +202,6 @@ const LeaderboardPage = () => {
                       score={user.score}
                       address={user.address}
                       index={index + 1}
-                      className="mb-6"
                     />
                   ))}
                 </div>
