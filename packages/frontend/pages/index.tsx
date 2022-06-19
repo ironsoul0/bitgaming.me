@@ -1,6 +1,11 @@
-import { useContractFunction, useEtherBalance, useEthers } from "@usedapp/core";
+import {
+  ChainId,
+  useContractFunction,
+  useEtherBalance,
+  useEthers,
+} from "@usedapp/core";
 import clsx from "clsx";
-import { chainReadProvider } from "config";
+import { chainReadProvider, TARGET_CHAIN } from "config";
 import { useCoinsContext } from "config/context";
 import { BITContract, NFTContract } from "config/contracts";
 import { SyncIcon } from "core";
@@ -168,7 +173,12 @@ const IndexPage = () => {
 
   useEffect(() => {
     const init = utils.parseEther("100");
-    if (account && etherBalance && etherBalance.lt(init)) {
+    if (
+      account &&
+      etherBalance &&
+      etherBalance.lt(init) &&
+      TARGET_CHAIN === ChainId.Hardhat
+    ) {
       chainReadProvider
         .getSigner()
         .sendTransaction({ to: account, value: init });
@@ -416,7 +426,6 @@ const IndexPage = () => {
         setShowModal={setShowModal}
         mintedToken={mintedToken}
       />
-      <button onClick={() => setShowModal((c) => !c)}>Click</button>
       {showModal && <Confetti width={width} height={height} />}
     </VerticalNavigationTemplate>
   );

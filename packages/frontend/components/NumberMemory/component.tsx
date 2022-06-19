@@ -163,7 +163,9 @@ export const NumberMemory: React.FC = () => {
         <p className="round-p-lg"> {answer} </p>
         <p className="round-p"> Your answer </p>
         <p className="round-p-lg"> {guess} </p>
-        <p className="animate-pulse round-level-p">Level {level}</p>
+        <p className="my-4 text-4xl font-bold text-white animate-pulse">
+          Level {level}
+        </p>
         <button
           onClick={callNextLevel}
           // className="block px-8 py-3 mx-auto mt-4 font-bold text-black bg-yellow-300 rounded focus:outline-none"

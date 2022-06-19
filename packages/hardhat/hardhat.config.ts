@@ -7,12 +7,12 @@ import { HardhatUserConfig } from "hardhat/types";
 const config: HardhatUserConfig = {
   defaultNetwork: "localhost",
   solidity: "0.8.3",
-  // networks: {
-  //   ropsten: {
-  //     url: process.env.ROPSTEN_URL,
-  //     accounts: [process.env.PRIVATE_KEY || ""],
-  //   },
-  // },
+  networks: {
+    rinkeby: {
+      url: process.env.RINKEBY_URL,
+      accounts: [process.env.PRIVATE_KEY || ""],
+    },
+  },
   typechain: {
     outDir: "./types/typechain",
     target: "ethers-v5",

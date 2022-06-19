@@ -37,9 +37,14 @@ const AccountBlock: React.FC = () => {
             <img src="https://i.ibb.co/fxrbS6p/Ellipse-2-2.png" alt="avatar" />
           </div>
           <div className="flex flex-col items-start justify-start mr-16 space-y-2">
-            <p className="text-base text-white cursor-pointer leading-4">
+            <a
+              target="_blank"
+              className="text-base text-white cursor-pointer leading-4"
+              href={`${process.env.NEXT_PUBLIC_ETHERSCAN}/${account}`}
+              rel="noreferrer"
+            >
               {account?.substr(0, 10).concat("...")}
-            </p>
+            </a>
             <div className="flex items-center font-bold text-gray-400 cursor-pointer text-md leading-3 account-balance">
               {/* {account?.substr(0, 10).concat("...")} */}
               <p>{coins} BIT</p>
@@ -47,10 +52,10 @@ const AccountBlock: React.FC = () => {
             </div>
           </div>
 
-          <div className="hidden ml-10">
+          <div className="ml-10">
             <button
               aria-label="visit"
-              className="ml-8 bg-indigo-600 rounded-full focus:ring-2 focus:outline-none hover:bg-indigo-800 p-2.5"
+              className="ml-8 bg-indigo-600 rounded-full focus:ring-2 focus:outline-none p-2.5 opacity-70"
               onClick={() => deactivate()}
             >
               <svg

@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { chainReadProvider } from "config";
 import { BITContract } from "config/contracts";
 import { Contract, utils } from "ethers";
+import { formatEther } from "ethers/lib/utils";
 import React, { useEffect, useMemo, useState } from "react";
 import { BITToken } from "types/typechain/BITToken";
 
@@ -158,15 +159,15 @@ const LeaderboardPage = () => {
     const fetchLeaderboard = async () => {
       if (!contract) return;
       const data = await contract.getUsers();
-      data.sort((x, y) => {
-        if (x.balance.lt(y.balance)) return -1;
-        return 1;
-      });
-      console.log("data", data.slice(0, 10));
+      const sortData = data.map((x) => ({
+        addr: x.addr,
+        balance: parseInt(formatEther(x.balance), 10),
+      }));
+      sortData.sort((x, y) => y.balance - x.balance);
       setParticipants(
-        data.slice(0, 10).map((x) => ({
+        sortData.slice(0, 10).map((x) => ({
           address: x.addr,
-          score: utils.formatEther(x.balance),
+          score: x.balance,
         }))
       );
     };
@@ -191,9 +192,9 @@ const LeaderboardPage = () => {
                 </div>
               </div>
 
-              <div className="animate-smooth-appear">
-                {leaderboard.length > 0 ? (
-                  participants.map((user, index) => (
+              {participants.length && (
+                <div className="animate-smooth-appear">
+                  {participants.map((user, index) => (
                     <UserRow
                       key={user.id}
                       name={users[index].name}
@@ -203,11 +204,9 @@ const LeaderboardPage = () => {
                       index={index + 1}
                       className="mb-6"
                     />
-                  ))
-                ) : (
-                  <p className="px-2">Контакты отсутствуют</p>
-                )}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>
