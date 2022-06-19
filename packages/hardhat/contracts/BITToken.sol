@@ -58,6 +58,19 @@ contract BITToken is ERC20 {
     burner = _burner;
   }
 
+  function rewardTokens(address[] memory users, uint256[] memory tokens)
+    external
+    onlyOwner
+  {
+    for (uint256 i = 0; i < users.length; i++) {
+      _mint(users[i], tokens[i]);
+      if (!existingUsers[users[i]]) {
+        holders.push(users[i]);
+      }
+      existingUsers[users[i]] = true;
+    }
+  }
+
   function _beforeTokenTransfer(
     address from,
     address to,
