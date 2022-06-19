@@ -10,7 +10,9 @@
     ],
     "nohoist": [
       "**/hardhat",
-      "**/hardhat/**"
+      "**/hardhat/**",
+      "**/hardhat-ts",
+      "**/hardhat-ts/**"
     ]
   },
   "license": "MIT",

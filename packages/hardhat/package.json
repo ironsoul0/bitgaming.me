@@ -8,17 +8,19 @@
     "lint": "yarn eslint && yarn contracts",
     "contracts": "prettier --write \"contracts/**/*.sol\"",
     "eslint": "eslint --ignore-path .gitignore . --fix",
-    "deploy": "npx hardhat run scripts/deploy.ts"
+    "deploy": "npx hardhat run scripts/deploy.ts",
+    "verify": "npx hardhat run scripts/verify.ts"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@openzeppelin/contracts": "^4.3.2",
     "@typechain/ethers-v5": "^7.1.0",
     "@typechain/hardhat": "^2.3.0",
     "@typechain/web3-v1": "^3.1.0",
     "@types/node": "^16.9.6",
     "@typescript-eslint/eslint-plugin": "^4.31.2",
     "@typescript-eslint/parser": "^4.31.2",
-    "@openzeppelin/contracts": "^4.3.2",
+    "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.24.2",
@@ -30,7 +32,9 @@
     "prettier-plugin-solidity": "^1.0.0-beta.18",
     "ts-node": "^10.2.1",
     "typechain": "^5.1.2",
-    "typescript": "^4.4.3",
-    "dotenv": "^10.0.0"
+    "typescript": "^4.4.3"
+  },
+  "dependencies": {
+    "@nomiclabs/hardhat-etherscan": "^3.1.0"
   }
 }
