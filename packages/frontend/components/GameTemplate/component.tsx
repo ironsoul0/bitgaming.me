@@ -1,25 +1,19 @@
 import { useEthers } from "@usedapp/core";
 import clsx from "clsx";
-import { useRouter } from "next/router";
 import React, { cloneElement, FC, useState } from "react";
-import { toast } from "react-toastify";
 
 import { CrossIcon } from "../../core";
 import { Props } from "./props";
 
 export const GameTemplate: FC<Props> = ({
-  name,
-  description,
   className,
   children,
-  icon,
   activeGame,
   setActiveGame,
   pregameText,
   gameDesc,
 }: Props) => {
   const [start, setStart] = useState(true);
-  const router = useRouter();
   const { account, activateBrowserWallet } = useEthers();
 
   const closeGame = () => {

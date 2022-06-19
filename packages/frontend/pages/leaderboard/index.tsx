@@ -2,7 +2,7 @@ import { useEthers } from "@usedapp/core";
 import clsx from "clsx";
 import { chainReadProvider } from "config";
 import { BITContract } from "config/contracts";
-import { Contract, utils } from "ethers";
+import { Contract } from "ethers";
 import { formatEther } from "ethers/lib/utils";
 import React, { useEffect, useMemo, useState } from "react";
 import { BITToken } from "types/typechain/BITToken";
@@ -194,7 +194,7 @@ const LeaderboardPage = () => {
 
               {participants.length > 0 && (
                 <div className="animate-smooth-appear">
-                  {participants.map((user, index) => (
+                  {participants.map((user: any, index: any) => (
                     <UserRow
                       key={user.id}
                       name={users[index].name}

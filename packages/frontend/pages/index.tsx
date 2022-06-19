@@ -9,7 +9,7 @@ import { chainReadProvider, TARGET_CHAIN } from "config";
 import { useCoinsContext } from "config/context";
 import { BITContract, NFTContract } from "config/contracts";
 import { SyncIcon } from "core";
-import { BigNumber, Contract, ethers, utils } from "ethers";
+import { Contract, ethers, utils } from "ethers";
 import { LogDescription } from "ethers/lib/utils";
 import { useWindowSize } from "hooks";
 import React, {

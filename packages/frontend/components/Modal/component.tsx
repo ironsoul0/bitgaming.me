@@ -11,8 +11,6 @@ type Props = {
 };
 
 export const Modal: React.FC<Props> = ({
-  content,
-  handleClick,
   showModal,
   setShowModal,
   mintedToken,
