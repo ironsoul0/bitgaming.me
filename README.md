@@ -6,7 +6,11 @@
 
 <h1 align="center">Bit Gaming</h1>
 
-<p align="center">Play-to-earn DAO with exclusive NFT collection.<br/>JAS Ventures Blockchain Hackathon Winner 🏆</p>
+<h3 align="center">
+  Samruk Hackathon Winner 🏆
+</h3>
+
+<p align="center">Play-to-earn DAO with exclusive NFT collection</p>
 
 ![Screenshot](./assets/screenshot.png)
 
