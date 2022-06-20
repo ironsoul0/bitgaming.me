@@ -68,6 +68,7 @@ yarn dev
 ## Notes
 
 - This project was created for participating in [JAS Ventures Hackathon Blockchain day](https://jva.vc/index.php/ru/hackathon).
+- Developed by [@Akezh](https://github.com/Akezh) and [@ironsoul0](https://github.com/ironsoul0)
 
 ## License
 
