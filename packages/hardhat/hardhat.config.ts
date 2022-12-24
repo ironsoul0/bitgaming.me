@@ -9,8 +9,8 @@ const config: HardhatUserConfig = {
   defaultNetwork: "localhost",
   solidity: "0.8.3",
   networks: {
-    rinkeby: {
-      url: process.env.RINKEBY_URL,
+    goerli: {
+      url: process.env.GOERLI_URL,
       accounts: [process.env.PRIVATE_KEY || ""],
     },
   },

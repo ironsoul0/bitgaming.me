@@ -8,14 +8,30 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 import "./BITToken.sol";
 
+interface IReputyApp {
+  function addRating(
+    address user,
+    uint256 delta,
+    string memory action
+  ) external;
+
+  function subRating(
+    address user,
+    uint256 delta,
+    string memory action
+  ) external;
+}
+
 contract BrainNFT is ERC721URIStorage {
   uint256 public constant BRONZE_THRESHOLD = 50 ether;
   uint256 public constant SILVER_THRESHOLD = 300 ether;
   uint256 public constant GOLD_THRESHOLD = 500 ether;
   uint256 public constant NFT_AMOUNT = 9;
+  uint256 public constant CLAIM_NFT_REWARD = 20;
 
   address public owner;
   address public bitToken;
+  IReputyApp public reputyApp;
   mapping(address => mapping(uint256 => uint256)) ownerCounter;
 
   string private baseURI;
@@ -28,6 +44,10 @@ contract BrainNFT is ERC721URIStorage {
   {
     baseURI = baseURI_;
     bitToken = bitToken_;
+  }
+
+  function setReputyApp(address app) external {
+    reputyApp = IReputyApp(app);
   }
 
   function claimNFT(uint256 nftIndex) external {
@@ -52,6 +72,8 @@ contract BrainNFT is ERC721URIStorage {
     _setTokenURI(newItemId, Strings.toString(nftIndex));
     console.log(tokenURI(newItemId));
     ownerCounter[msg.sender][nftIndex]++;
+
+    reputyApp.addRating(msg.sender, CLAIM_NFT_REWARD, "");
   }
 
   function getOwnershipCount(address user)

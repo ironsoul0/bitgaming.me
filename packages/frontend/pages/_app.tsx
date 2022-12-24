@@ -23,6 +23,7 @@ const config: Config = {
     ChainId.Ropsten,
     ChainId.Localhost,
     ChainId.Hardhat,
+    ChainId.Goerli,
   ],
   multicallAddresses: {
     ...MULTICALL_ADDRESSES,

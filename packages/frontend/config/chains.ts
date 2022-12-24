@@ -3,19 +3,19 @@ import { providers } from "ethers";
 
 const INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 
-type ValidChainID = ChainId.Rinkeby | ChainId.Hardhat;
+type ValidChainID = ChainId.Goerli | ChainId.Hardhat;
 
 export type ChainIDUrl = {
   [T in ValidChainID]: string;
 };
 
 export const readOnlyUrls: ChainIDUrl = {
-  [ChainId.Rinkeby]: `https://rinkeby.infura.io/v3/${INFURA_ID}`,
+  [ChainId.Goerli]: `https://goerli.infura.io/v3/${INFURA_ID}`,
   [ChainId.Hardhat]: `http://localhost:8545`,
 };
 
 export const blockExplorers: ChainIDUrl = {
-  [ChainId.Rinkeby]: `https://rinkeby.etherscan.io`,
+  [ChainId.Goerli]: `https://goerli.etherscan.io`,
   [ChainId.Hardhat]: `https://localhost:8545`,
 };
 

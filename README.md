@@ -28,12 +28,12 @@ Unlimited possibilites with potential to add new gaming experience.
 
 ## Smart contracts
 
-Our core smart contracts are verified on Rinkeby testnet.
+Our core smart contracts are verified on Goerli testnet.
 
 | Contract                                  | Link                                  |
 | ---------------------------------------- | -------------------------------------------- |
-| `BIT ERC20 Token` | [0x2C04c3Faf3040eA42A6887eC230Cf0a397eb28a2](https://rinkeby.etherscan.io/address/0x2C04c3Faf3040eA42A6887eC230Cf0a397eb28a2#code) |
-| `Brain ERC721 NFT` | [0xB94DDe6743f073de10943665302b3493e464aa02](https://rinkeby.etherscan.io/address/0xB94DDe6743f073de10943665302b3493e464aa02#code) |
+| `BIT ERC20 Token` | [0x2C04c3Faf3040eA42A6887eC230Cf0a397eb28a2](https://goerli.etherscan.io/address/0x032b33471C9EF4E88844D846C22E9423fEB99155#code) |
+| `Brain ERC721 NFT` | [0xB94DDe6743f073de10943665302b3493e464aa02](https://goerli.etherscan.io/address/0xf300cA633C836bB98d5efD063a5C34e13cDAc6Cc#code) |
 
 ## Setup
 
@@ -67,7 +67,7 @@ yarn dev
 
 ## Notes
 
-- This project was created for participating in [JAS Ventures Hackathon Blockchain day](https://jva.vc/index.php/ru/hackathon).
+- This project was created for participating in [JAS Ventures Hackathon Blockchain day](https://jva.vc/index.php/ru/hackathon)
 - Developed by [@Akezh](https://github.com/Akezh) and [@ironsoul0](https://github.com/ironsoul0)
 
 ## License

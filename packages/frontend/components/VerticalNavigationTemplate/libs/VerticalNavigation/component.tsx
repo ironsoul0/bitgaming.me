@@ -24,7 +24,7 @@ const AccountBlock: React.FC = () => {
     content = (
       <div className="w-full px-6 py-4 font-bold text-white bg-red-500 rounded-md">
         <p>Wrong chain!</p>
-        <p>Please connect to Rinkeby.</p>
+        <p>Please connect to Goerli.</p>
       </div>
     );
   } else if (account) {
